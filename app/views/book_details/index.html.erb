@@ -1,0 +1,56 @@
+<div id="book_details_index">
+  <h2 class="heading">検索結果</h2>
+  <% if @search_words.present? %>
+    <% sentence = '' %>
+    <% @search_words.each do |search_word| %>
+      <% sentence += " & " if sentence.present? %>
+      <% sentence += "'#{search_word}'" %>
+    <% end %>
+    <p>
+      <%= "「#{sentence}」の検索結果" %><br />
+      該当書籍情報数: <%= @book_details.count %>件<br />
+      該当蔵書数: <%= books_count(@book_details) %>件<br />
+      <%= link_to "検索結果はありません。再度検索してください", root_path if @book_details.blank? %>
+    </p>
+    <div class="container-fluid">
+      <div class="row">
+        <%= form_tag(book_details_path, method: "get", class: "form-inline") do %>
+          <%= text_field_tag :simplesearch, params[:simplesearch], class: "form-control" %>
+          <%= submit_tag("簡易検索", class: "btn btn-success") %>
+        <% end %>
+        ※書籍名、作者名、出版社名、詳細内容の一部で検索可能です。(複数キーワードOK)
+      </div>
+    </div>
+  <% else %>
+    <%= "検索ワードが未入力のため、全件表示です。" %><br />
+    該当書籍情報数: <%= @book_details.count %>件<br />
+    該当蔵書数: <%= books_count(@book_details) %>件<br />
+    <div class="container-fluid">
+      <div class="row">
+        <%= form_tag(book_details_path, method: "get", class: "form-inline") do %>
+          <%= text_field_tag :simplesearch, params[:simplesearch], class: "form-control" %>
+          <%= submit_tag("簡易検索", class: "btn btn-success") %>
+        <% end %>
+        ※書籍名、作者名、出版社名、詳細内容の一部で検索可能です。(複数キーワードOK)
+      </div>
+    </div>
+  <% end %>
+  <h3><span class="sub_heading">絞り込み検索:</span></h3>
+  <%= select_tag 'search[column]', options_for_select([["書籍名", "title"], ["著者", "writer"], ["出版社", "publisher"]]) %>
+  <%= text_field :search, :word %>
+  <%= select :search, :include, [["この言葉を含む", "yes"], ["この言葉を含まない", "no"]] %>
+  <%= button_tag(type: 'button', id: 'narrow_button') do %>
+    <%= "絞り込み" %>
+  <% end %>
+  <%= button_tag(type: 'button', id: 'narrow_cancel_button') do %>
+    <%= "キャンセル" %>
+  <% end %>
+  <br />
+  <%= check_box_tag :lendable %> <%= label_tag :lendable, "貸出可能のみ" %>
+  
+  <br /><br />
+
+  <div>
+    <%= render partial: 'book_details/index', locals: { book_details: @book_details } %>
+  </div>
+</div>

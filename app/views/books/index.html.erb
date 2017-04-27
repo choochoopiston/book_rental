@@ -1,0 +1,30 @@
+<h1 class="heading">蔵書一覧 <%= link_to '新規蔵書を登録', new_book_path, class: "btn btn-success btn-xs" if current_user && current_user.admin == true %></h1>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>蔵書コード</th>
+        <th>書籍タイトル</th>
+        <th>配架場所</th>
+        <th>貸出状況</th>
+        <th>貸出回数</th>
+        <th colspan="2">管理者用</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @books.order("code DESC").each do |book| %>
+        <tr>
+          <td><%= link_to book.code, book %></td>
+          <td><%= link_to book.book_detail.title, book.book_detail %></td>
+          <td><%= place_if(book.place) %></td>
+          <td><%= state_if(book.state) %></td>
+          <td><%= book.lending_histories.count %></td>
+          <td><%= link_to '修正', edit_book_path(book), class: "btn btn-warning btn-xs" %></td>
+          <td><%= link_to '削除', book, method: :delete, class: "btn btn-danger btn-xs", data: { confirm: '本当に削除しますか?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

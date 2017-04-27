@@ -1,0 +1,95 @@
+<%= form_for(@book_detail, html: {class: 'form-horizontal'}) do |f| %>
+  <% if @book_detail.errors.any? %>
+    <div class="col-sm-offset-3 col-sm-8">
+      <div id="error_explanation">
+        <h2><%= @book_detail.errors.count %>個のエラーがあります。</h2>
+  
+        <ul>
+        <% @book_detail.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :isbn_code, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.number_field :isbn_code, class: "form-control" %>
+      <span id="isbn_api" class="btn btn-info btn-xs">自動入力</span>
+      <div id="message"></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :c_code, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.number_field :c_code, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :title, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.text_field :title, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :writer, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.text_field :writer, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :publisher, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.text_field :publisher, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :content, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.text_area :content, class: "form-control" %>
+    </div>
+  </div>
+  
+  <% unless params[:book_detail_only] %>
+  <%= f.fields_for :books do |b| %>
+    <fieldset>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-9">
+        <legend id="original">▼蔵書も同時に登録・修正</legend>
+      </div>
+    </div>
+    
+    <div class="form-group">
+    <%= b.label :code, "蔵書コード", class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= b.text_field :code, class: "form-control" %>
+    </div>
+    </div>
+
+    <div class="form-group">
+    <%= b.label :place, "配架場所", class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= b.radio_button :place, 0 %> <%= b.label :place_0, "研修センター", class: "control-label" %>
+      <%= b.radio_button :place, 1 %> <%= b.label :place_1, "本社", class: "control-label" %>
+    </div>
+    </div>
+
+    <div class="form-group">
+    <%= b.label :state, "貸出状況", class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= b.radio_button :state, 0 %> <%= b.label :state_0, "貸出厳禁", class: "control-label" %>
+      <%= b.radio_button :state, 1 %> <%= b.label :state_1, "貸出可能", class: "control-label" %>
+    </div>
+    </div>
+    </fieldset>
+  <% end %>
+  <% end %>
+
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-8">
+      <%= f.submit class: "btn btn-success" %>
+    </div>
+  </div>
+<% end %>

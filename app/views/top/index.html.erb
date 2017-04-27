@@ -1,0 +1,22 @@
+<div id="top_page">
+  <h2 class="heading">簡易検索</h2>
+  <div class="container-fluid">
+    <%= form_tag(book_details_path, method: "get", class: "form-inline") do %>
+      <%= text_field_tag :simplesearch, params[:simplesearch], class: "form-control" %>
+      <%= submit_tag("簡易検索", class: "btn btn-success") %>
+    <% end %>
+    ※書籍名、作者名、出版社名、詳細内容の一部で検索可能です。(複数キーワードOK)
+  </div>
+  <h2 class="heading">詳細検索</h2>
+  <div class="container-fluid">
+    準備中・・・
+  </div>
+  <h2 class="heading">貸出履歴</h2>
+  <div class="container-fluid">
+    <% if current_user %>
+      <%= link_to "履歴を見る", user_path(current_user.id) %>
+    <% else %>
+      <%= render 'user_sessions/form' %>
+    <% end %>
+  </div>
+</div>

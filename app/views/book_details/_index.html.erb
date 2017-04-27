@@ -1,0 +1,47 @@
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>貸出状況</th>
+        <th>蔵書コード</th>
+        <th>書籍名</th>
+        <th>著者</th>
+        <th>出版社</th>
+        <th>詳細</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% book_details.each do |book_detail| %>
+        <% if book_detail.books.count > 1 %>
+          <% book_detail.books.each do |book| %>
+            <tr>
+              <td><%= state_if(book.state) %></td>
+              <td><%= link_to "#{book.code}", book_path(book) %></td>
+              <td><%= link_to "#{book.book_detail.title}", book_detail_path(book.book_detail) %></td>
+              <td id="td_writer"><%= book.book_detail.writer %></td>
+              <td id="td_publisher"><%= book.book_detail.publisher %></td>
+              <td id="td_content"><%= book.book_detail.content %></td>
+            </tr>
+          <% end %>
+        <% elsif book_detail.books.count == 0 %>
+            <td><%= "蔵書なし" %></td>
+            <td><%= "蔵書なし" %></td>
+            <td><%= link_to "#{book_detail.title}", book_detail_path(book_detail) %></td>
+            <td><%= book_detail.writer %></td>
+            <td id="publisher"><%= book_detail.publisher %></td>
+            <td><%= book_detail.content %></td>        
+        <% else %>
+          <tr>
+            <td><%= state_if(book_detail.books.first.state) %></td>
+            <td><%= link_to "#{book_detail.books.first.code}", book_path(book_detail.books.first.id) %></td>
+            <td><%= link_to "#{book_detail.title}", book_detail_path(book_detail) %></td>
+            <td><%= book_detail.writer %></td>
+            <td id="publisher"><%= book_detail.publisher %></td>
+            <td><%= book_detail.content %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

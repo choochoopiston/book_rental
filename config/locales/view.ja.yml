@@ -1,0 +1,16 @@
+ja:
+  password: パスワード
+  password_confirmation: パスワード(確認用)
+  email: メールアドレス
+  username: ユーザ名
+  employee_id: 社員番号
+  book_detail_id: 書籍情報タイトル
+  code: 蔵書コード
+  place: 配架場所
+  state: 貸出状況
+  isbn_code: 図書コード
+  c_code: 分類コード
+  title: 書籍名
+  writer: 著者
+  publisher: 出版社
+  content: 詳細内容

@@ -1,0 +1,56 @@
+<div id="book_details_show">
+  <h2>書籍詳細 
+      <%= link_to '(書籍情報一覧へ)', book_details_path, class: "small" %> 
+      <%= link_to '書籍情報を編集', edit_book_detail_path(@book_detail), class: "btn btn-success btn-xs" if current_user && current_user.admin == true %>
+      <%= link_to '削除', book_detail_path(@book_detail), method: :delete, data: {confirm: "本当に削除しますか？付随する蔵書データもされます。
+      "}, class: "btn btn-danger btn-xs" if current_user && current_user.admin == true %>
+  </h2>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 detail_colum">図書コード</div>
+      <div class="col-sm-9 detail_content"><%= @book_detail.isbn_code %></div>
+      <div class="col-sm-3 detail_colum">書籍名</div>
+      <div class="col-sm-9 detail_content"><%= @book_detail.title %></div>
+      <div class="col-sm-3 detail_colum">分類</div>
+      <div class="col-sm-1 detail_colum">対象</div>
+      <div class="col-sm-2 detail_content"><%= @book_detail.c_code %></div>
+      <div class="col-sm-1 detail_colum">形態</div>
+      <div class="col-sm-2 detail_content">(仮)</div>
+      <div class="col-sm-1 detail_colum">内容</div>
+      <div class="col-sm-2 detail_content">(仮)</div>
+      <div class="col-sm-3 detail_colum">著者</div>
+      <div class="col-sm-9 detail_content"><%= @book_detail.writer %></div>
+      <div class="col-sm-3 detail_colum">出版社</div>
+      <div class="col-sm-9 detail_content"><%= @book_detail.publisher %></div>
+      <div class="col-sm-3 detail_colum">詳細</div>
+      <div class="col-sm-9 detail_content"><%= @book_detail.content %></div>
+    </div>
+  </div>
+  <h2>蔵書 
+      <%= link_to '新規蔵書情報を登録', new_book_path(book_detail: @book_detail.id), class: "btn btn-success btn-xs" if current_user && current_user.admin == true %>
+  </h2>
+  <h3>所蔵数<%= @book_detail.books.count %>冊</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>配架場所</th>
+        <th>蔵書コード</th>
+        <th>貸出状況</th>
+        <th>返却予定日</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @book_detail.books.each_with_index do |book, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= place_if(book.place) %></td>
+          <td><%= link_to "#{book.code}", book_path(book) %></td>
+          <td><%= state_if(book.state) %></td>
+          <td><%= book.lending_histories.where(returned_date: nil).first.return_date if book.state == 2 %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

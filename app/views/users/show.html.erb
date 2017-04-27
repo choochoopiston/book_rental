@@ -1,0 +1,117 @@
+<h2><%= "'#{@user.username}'さんの貸出履歴" %></h2>
+貸出履歴数: <%= @user.lending_histories.count %>件<br>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>蔵書コード</th>
+        <th>書籍名</th>
+        <th>貸出日</th>
+        <th>返却期限</th>
+        <th>返却日</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @user.lending_histories.each do |lh| %>
+        <% book_detail = BookDetail.find(lh.book.book_detail_id) %>
+        <tr>
+          <td><%= link_to "#{lh.book.code}", book_path(lh.book.id) %></td>
+          <td><%= link_to "#{book_detail.title}", book_detail_path(lh.book.book_detail_id) %></td>
+          <td><%= lh.created_at.to_s(:date) %></td>
+          <td><%= lh.return_date.to_s(:date) %></td>
+          <td><%= lh.returned_date.to_s(:date) if lh.returned_date.present? %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<% if @user.admin == true %>
+  <h2 class="heading">貸出状況</h2>
+    <ul>
+      <li>
+        <%= link_to "貸出状況一覧", lending_histories_path %>
+      </li>
+    </ul>
+  <h2 class="heading">書籍登録</h2>
+  <ul>
+    <li>
+      <%= link_to '新規書籍情報＆蔵書を同時登録', new_book_detail_path %>
+    </li>
+    <li>
+      <%= link_to '新規書籍情報のみを登録', new_book_detail_path(book_detail_only: "yes") %>
+    </li>
+    <li>
+      <%= link_to '書籍情報一覧', book_details_path %>
+    </li>
+    <li>
+      <%= link_to 'CSV出力', book_details_path(format: :csv) %>
+    </li>
+    <li>
+      <%= link_to 'CSV一括登録フォーマットDL', download_book_details_path(format: :csv)  %>
+    </li>
+    <li>
+      <%= 'CSV一括登録' %>
+      <%= form_tag import_book_details_path, multipart: true do %>
+        <%= file_field_tag :file %>
+        <%= submit_tag "インポート" %>
+      <% end %>
+    </li>
+  </ul>
+  <h2 class="heading">蔵書検索</h2>
+  準備中・・・
+  <ul>
+    <li>
+      <%= link_to '新規蔵書を登録(既存の本を登録）', new_book_path %>
+    </li>
+     <li>
+      <%= link_to '蔵書一覧', books_path %>
+    </li>
+    <li>
+      <%= link_to 'CSV出力', books_path(format: :csv) %>
+    </li>
+    <li>
+      <%= link_to 'CSV一括登録フォーマットDL', download_books_path(format: :csv)  %>
+    </li>
+    <li>
+      <%= 'CSV一括登録' %>
+      <%= form_tag import_books_path, multipart: true do %>
+        <%= file_field_tag :file %>
+        <%= submit_tag "インポート" %>
+      <% end %>
+    </li>
+  </ul>
+  <h2 class="heading">ユーザ登録</h2>
+  <ul>
+    <li>
+      <%= link_to 'ユーザ登録', new_user_path %>
+    </li>
+    <li>
+      <%= link_to 'ユーザ一覧', users_path %>
+    </li>
+    <li>
+      <%= link_to 'CSV出力', users_path(format: :csv) %>
+    </li>
+    <li>
+      <%= link_to 'CSV一括登録フォーマットDL', download_users_path(format: :csv)  %>
+    </li>
+    <li>
+      <%= 'CSV一括登録' %>
+      <%= form_tag import_users_path, multipart: true do %>
+        <%= file_field_tag :file %>
+        <%= submit_tag "インポート" %>
+      <% end %>
+    </li>
+  </ul>
+  <h2 class="heading">メール送信</h2>
+  <div class="row text-center">
+    <div class="col-sm-6">
+      <%= link_to "返却間近メール", send_warning_lending_histories_path, class: "btn btn-warning btn-lg" %>
+    </div>
+    <div class="col-sm-6">
+      <%= link_to "返却過ぎてるメール", send_email_lending_histories_path, class: "btn btn-danger btn-lg" %>
+    </div>
+  </div>
+<% end %>

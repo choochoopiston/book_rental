@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  isbn_code: 
+  c_code: 1
+  title: MyString
+  writer: MyString
+  publisher: MyString
+  content: MyText
+
+two:
+  isbn_code: 
+  c_code: 1
+  title: MyString
+  writer: MyString
+  publisher: MyString
+  content: MyText

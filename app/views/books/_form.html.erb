@@ -1,0 +1,53 @@
+<%= form_for(@book, html: {class: 'form-horizontal'}) do |f| %>
+  <% if @book.errors.any? %>
+    <div class="col-sm-offset-3 col-sm-8">
+      <div id="error_explanation">
+        <h2><%= @book.errors.count %>個のエラーがあります。</h2>
+  
+        <ul>
+        <% @book.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :book_detail_id, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.collection_select(:book_detail_id, BookDetail.all, :id, :title, {prompt: "" }, {class: "mgn-top7"}) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :code, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.text_field :code, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :place, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.radio_button :place, 0 %> <%= f.label :place_0, "研修センター", class: "control-label" %>
+      <%= f.radio_button :place, 1 %> <%= f.label :place_1, "本社", class: "control-label" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :state, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <% if @book.state == 2 %>
+        貸出中のため、変更できません。
+        <%= f.hidden_field :state %><br>
+      <% else %>
+        <%= f.radio_button :state, 0 %> <%= f.label :state_0, "貸出厳禁", class: "control-label" %>
+        <%= f.radio_button :state, 1 %> <%= f.label :state_1, "貸出可能", class: "control-label" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-8">
+      <%= f.submit class: "btn btn-success" %>
+    </div>
+  </div>
+<% end %>
+

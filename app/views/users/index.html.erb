@@ -1,0 +1,33 @@
+<h1>ユーザ一覧 <br class="visible-xs" /><%= link_to '(新規ユーザ登録)', new_user_path, class: "small" %></h1>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>社員番号</th>
+        <th>ユーザ名</th>
+        <th>メールアドレス</th>
+        <th>貸出履歴数</th>
+        <th>貸出中数</th>
+        <th colspan="3">管理者権限</th>
+        <!--<th></th>-->
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.employee_id %></td>
+          <td><%= link_to "#{user.username}", user %></td>
+          <td><%= user.email %></td>
+          <td><%= user.lending_histories.count %></td>
+          <td><%= user.lending_histories.where(returned_date: nil).count %></td>
+          <td><%= admin_if(user.admin) %></td>
+          <td><%= link_to '修正', edit_user_path(user), class: "btn btn-warning btn-xs" %></td>
+          <td><%= link_to '削除', user, method: :delete, class: "btn btn-danger btn-xs", data: { confirm: '本当に削除しますか?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+

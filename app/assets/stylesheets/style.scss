@@ -1,0 +1,41 @@
+h1#logo a {
+    color: #fff !important;
+    font-weight: bold;
+    
+    &:hover {
+        background: none;
+        text-decoration: none;
+    }
+}
+
+legend#original {
+    margin-bottom: 0 !important;
+    margin-top: 10px;
+}
+
+.heading {
+    background: #274D00;
+    color: #fff;
+    padding: 7px;
+}
+
+.sub_heading {
+    color: #274D00;
+    padding: 3px 10px;
+    text-decoration: underline;
+    background-color: rgba(115,230,0,0.2)
+}
+
+#login_form .row + .row {
+    margin-top: 5px;
+}
+table th {
+    background: #FFF7AA;
+    // color: #fff;
+    font-weight: normal !important;
+    text-align: center !important;
+}
+
+th, td {
+    border-right: 2px solid #fff;
+}
