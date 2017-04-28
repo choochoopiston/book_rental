@@ -81,9 +81,67 @@ $(function(){
 // Google Books APIへ問い合わせを行う。
 // もしGoogle Books APIに書籍が存在しない(totalItemsが0の場合)、入力欄に表示されたデータをすべて消去し、該当書籍がないとメッセージを表示する
 
-    $("#isbn_api").click(function() {
+    $("#gb_api").click(function() {
       const isbn = $("#book_detail_isbn_code").val();
       const url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn;
+
+      $.getJSON(url, function(data) {
+        if(!data.totalItems) {
+          $("#book_detail_isbn_code").val(isbn);
+          $("#book_detail_c_code").val("");
+          $("#book_detail_title").val("");
+          $("#book_detail_writer").val("");
+          $("#book_detail_publisher").val("");
+          $("#book_detail_content").val("");
+
+          $("#message").html('<p class="bg-warning" id="warning">該当する書籍がありません。</p>');
+          $('#message > p').fadeOut(3000);
+
+        } else {
+
+// 該当書籍が存在した場合、JSONから値を取得して入力項目のデータを取得する
+          $("#book_detail_isbn_code").val(isbn);
+          $("#book_detail_title").val(data.items[0].volumeInfo.title);
+          $("#book_detail_writer").val(data.items[0].volumeInfo.authors);
+          $("#book_detail_publisher").val(data.items[0].volumeInfo.publisher);
+          $("#book_detail_content").val(data.items[0].volumeInfo.description);
+        }
+
+      });
+    });
+    
+    $("#ndl_api").click(function() {
+      const isbn = $("#book_detail_isbn_code").val();
+      const url = "https://iss.ndl.go.jp/api/opensearch?isbn=" + isbn;
+      
+      $.ajax({
+        url: url,
+        type:'GET',
+        dataType:'xml',
+        timeout:10000,
+        error:function() {
+            alert("ロード失敗");
+        },
+        success:function(xml){
+          if($(xml).find('totalResults, openSearch\\:totalResults').text() != 0) {
+            $("#book_detail_isbn_code").val(isbn);
+            $("#book_detail_title").val($(xml).find('title, dc\\:title').text());
+            $("#book_detail_writer").val($(xml).find('author').text());
+            $("#book_detail_publisher").val($(xml).find('publisher, dc\\:publisher').text());
+            $("#book_detail_content").val("");            
+          }else{
+            $("#book_detail_isbn_code").val(isbn);
+            $("#book_detail_c_code").val("");
+            $("#book_detail_title").val("");
+            $("#book_detail_writer").val("");
+            $("#book_detail_publisher").val("");
+            $("#book_detail_content").val("");
+  
+            $("#message").html('<p class="bg-warning" id="warning">該当する書籍がありません。</p>');
+            $('#message > p').fadeOut(3000);           
+          }
+        }
+      });
 
       $.getJSON(url, function(data) {
         if(!data.totalItems) {
@@ -92,17 +150,15 @@ $(function(){
           $("#book_detail_title").val("");
           $("#book_detail_writer").val("");
           $("#book_detail_publisher").val("");
-          $("#book_detail_content").text("");
+          $("#book_detail_content").val("");
 
           $("#message").html('<p class="bg-warning" id="warning">該当する書籍がありません。</p>');
           $('#message > p').fadeOut(3000);
 
         } else {
-
-// 該当書籍が存在した場合、JSONから値を取得して入力項目のデータを取得する
           $("#book_detail_isbn_code").val(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
           $("#book_detail_title").val(data.items[0].volumeInfo.title);
-          $("#book_detail_writer").val(data.items[0].volumeInfo.authors[0]);
+          $("#book_detail_writer").val(data.items[0].volumeInfo.authors);
           $("#book_detail_publisher").val(data.items[0].volumeInfo.publisher);
           $("#book_detail_content").val(data.items[0].volumeInfo.description);
         }

@@ -47,7 +47,7 @@
       <%= link_to '書籍情報一覧', book_details_path %>
     </li>
     <li>
-      <%= link_to 'CSV出力', book_details_path(format: :csv) %>
+      <%= link_to 'CSV出力', book_details_path(format: :csv), class: "csv_export" %>
     </li>
     <li>
       <%= link_to 'CSV一括登録フォーマットDL', download_book_details_path(format: :csv)  %>
@@ -106,12 +106,13 @@
     </li>
   </ul>
   <h2 class="heading">メール送信</h2>
-  <div class="row text-center">
-    <div class="col-sm-6">
+  <!--<div class="row text-center">-->
+  <!--  <div class="col-sm-6">-->
       <%= link_to "返却間近メール", send_warning_lending_histories_path, class: "btn btn-warning btn-lg" %>
-    </div>
-    <div class="col-sm-6">
-      <%= link_to "返却過ぎてるメール", send_email_lending_histories_path, class: "btn btn-danger btn-lg" %>
-    </div>
-  </div>
+    <!--</div>-->
+    <!--<br class="visible-xs" />-->
+    <!--<div class="col-sm-6">-->
+      <%= link_to "延滞催促メール", send_email_lending_histories_path, class: "btn btn-danger btn-lg" %>
+  <!--  </div>-->
+  <!--</div>-->
 <% end %>
