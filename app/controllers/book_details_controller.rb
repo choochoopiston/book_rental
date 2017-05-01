@@ -8,14 +8,16 @@ class BookDetailsController < ApplicationController
   def index
     if params[:simplesearch].present? 
       @search_words = params[:simplesearch].split(/[ ,　]/)
-      @book_details = BookDetail.get_by_multi_and_simplesearch(@search_words)
+      @book_details = BookDetail.get_by_multi_and_simplesearch(@search_words).page(params[:page])
     elsif params[:search1].present?
       @search_words = []
       @search_words.push(params[:search1][:word], params[:search2][:word], params[:search3][:word], params[:search4][:word])
-      @book_details = BookDetail.get_by_details(params[:search1], params[:search2], params[:search3], params[:search4],)
+      @book_details = BookDetail.get_by_details(params[:search1], params[:search2], params[:search3], params[:search4]).page(params[:page])
+
     else
       @search_words = []
-      @book_details = BookDetail.all
+      @book_details = BookDetail.page(params[:page])
+
     end
     
     respond_to do |format|
