@@ -72,6 +72,94 @@ $(function(){
                 }
             });
         }
+        
+        
+        
+        
+        
+        if ($('#lendable:checked').val() == 1) {
+          // 書籍名&含むを選択
+          if ($('#search_column').val() == "title" && $('#search_include').val() == "yes") {
+              var re = new RegExp($('#search_word').val(), "i");
+              $('tbody tr').each(function(){
+                  var txt = $(this).find("td:eq(2) a").html();
+                  var kashidashi = $(this).find("td:eq(0)").html();
+                  if(txt.match(re) != null && kashidashi == "貸出可能○"){
+                      $(this).show();
+                  }else{
+                      $(this).hide();
+                  }
+              });
+          }
+          // 書籍名&含まないを選択
+          if ($('#search_column').val() == "title" && $('#search_include').val() == "no") {
+              var re = new RegExp($('#search_word').val(), "i");
+              $('tbody tr').each(function(){
+                  var txt = $(this).find("td:eq(2) a").html();
+                  var kashidashi = $(this).find("td:eq(0)").html();
+                  if(txt.match(re) != null && kashidashi == "貸出可能○"){
+                      $(this).hide();
+                  }else{
+                      $(this).show();
+                  }
+              });
+          }
+          // 著者&含むを選択
+          if ($('#search_column').val() == "writer" && $('#search_include').val() == "yes") {
+              var re = new RegExp($('#search_word').val(), "i");
+              $('tbody tr').each(function(){
+                  var txt = $(this).find("td:eq(3)").html();
+                  var kashidashi = $(this).find("td:eq(0)").html();
+                  if(txt.match(re) != null && kashidashi == "貸出可能○"){
+                      $(this).show();
+                  }else{
+                      $(this).hide();
+                  }
+              });
+          }
+          // 著者&含まないを選択
+          if ($('#search_column').val() == "writer" && $('#search_include').val() == "no") {
+              var re = new RegExp($('#search_word').val(), "i");
+              $('tbody tr').each(function(){
+                  var txt = $(this).find("td:eq(3)").html();
+                  var kashidashi = $(this).find("td:eq(0)").html();
+                  if(txt.match(re) != null && kashidashi == "貸出可能○"){
+                      $(this).hide();
+                  }else{
+                      $(this).show();
+                  }
+              });
+          }
+          // 出版社&含むを選択
+          if ($('#search_column').val() == "publisher" && $('#search_include').val() == "yes") {
+              var re = new RegExp($('#search_word').val(), "i");
+              $('tbody tr').each(function(){
+                  var txt = $(this).find("td:eq(4)").html();
+                  var kashidashi = $(this).find("td:eq(0)").html();
+                  if(txt.match(re) != null && kashidashi == "貸出可能○"){
+                      $(this).show();
+                  }else{
+                      $(this).hide();
+                  }
+              });
+          }
+          // 出版社&含まないを選択
+          if ($('#search_column').val() == "publisher" && $('#search_include').val() == "no") {
+              var re = new RegExp($('#search_word').val(), "i");
+              $('tbody tr').each(function(){
+                  var txt = $(this).find("td:eq(4)").html();
+                  var kashidashi = $(this).find("td:eq(0)").html();
+                  if(txt.match(re) != null && kashidashi == "貸出可能○"){
+                      $(this).hide();
+                  }else{
+                      $(this).show();
+                  }
+              });
+          }
+        }
+        
+        
+        
     });
     $('#narrow_cancel_button').bind("click",function(){
         $('tr').show();
@@ -166,22 +254,27 @@ $(function(){
       });
     });
     
-    $('input[name="lendable"]').change(function() {
-        var val = $('#lendable:checked').val();
-        console.log(val)
-        var re = "貸出可能○"
-        if (val == 1) {
-            $('tbody tr').each(function(){
-                var txt = $(this).find("td:eq(0)").html();
-                if(txt.match(re) != null){
-                    $(this).show();
+    // $('input[name="lendable"]').change(function() {
+    //     var val = $('#lendable:checked').val();
+    //     var re = "貸出可能○"
+    //     if (val == 1) {
+    //         $('tbody tr').each(function(){
+    //             var txt = $(this).find("td:eq(0)").html();
+    //             if(txt.match(re) != null){
+    //                 $(this).show();
     
-                }else{
-                    $(this).hide();          
-                }
-            });
-        } else {
-            $('tr').show();
-        }
+    //             }else{
+    //                 $(this).hide();          
+    //             }
+    //         });
+    //     } else {
+    //         $('tr').show();
+    //     }
+    // });
+    
+    
+    $('#clearForm').bind('click', function(){
+        $(this.form).find("textarea, :text, select").val("").end().find(":checked").prop("checked", false);
     });
+    
 });

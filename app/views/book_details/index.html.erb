@@ -39,10 +39,10 @@
   <%= select_tag 'search[column]', options_for_select([["書籍名", "title"], ["著者", "writer"], ["出版社", "publisher"]]) %>
   <%= text_field :search, :word %>
   <%= select :search, :include, [["この言葉を含む", "yes"], ["この言葉を含まない", "no"]] %>
-  <%= button_tag(type: 'button', id: 'narrow_button') do %>
+  <%= button_tag(type: 'button', id: 'narrow_button', class: "btn btn-success btn-xs") do %>
     <%= "絞り込み" %>
   <% end %>
-  <%= button_tag(type: 'button', id: 'narrow_cancel_button') do %>
+  <%= button_tag(type: 'button', id: 'narrow_cancel_button', class: "btn btn-warning btn-xs") do %>
     <%= "キャンセル" %>
   <% end %>
   <br />

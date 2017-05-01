@@ -9,6 +9,10 @@ class BookDetailsController < ApplicationController
     if params[:simplesearch].present? 
       @search_words = params[:simplesearch].split(/[ ,　]/)
       @book_details = BookDetail.get_by_multi_and_simplesearch(@search_words)
+    elsif params[:search1].present?
+      @search_words = []
+      @search_words.push(params[:search1][:word], params[:search2][:word], params[:search3][:word], params[:search4][:word])
+      @book_details = BookDetail.get_by_details(params[:search1], params[:search2], params[:search3], params[:search4],)
     else
       @search_words = []
       @book_details = BookDetail.all
@@ -88,7 +92,7 @@ class BookDetailsController < ApplicationController
       end
       redirect_to book_details_path, notice: "書籍情報を一括登録しました。"
     rescue => e
-      redirect_to book_details_pat, notice: "書籍情報を一括登録できませんでした。データに少しでも不備があると登録できません。#{e.message}"
+      redirect_to book_details_path, notice: "書籍情報を一括登録できませんでした。データに少しでも不備があると登録できません。#{e.message}"
       Rails.logger.error e.message
       Rails.logger.error e.backtrace.join("\n")  
     end

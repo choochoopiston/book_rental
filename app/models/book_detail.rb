@@ -38,6 +38,118 @@ class BookDetail < ActiveRecord::Base
     where(:id => ids)
   end
   
+  def self.get_by_details(params1, params2, params3, params4)
+    sql_body = ""
+    if params1[:word].present?
+      sql_body1 = "(#{params1[:column]} #{params1[:include]} '%#{params1[:word]}%')" 
+      between1 =" #{params1[:andor]} "
+    end
+    
+    if params2[:word].present?
+      sql_body2 = "(#{params2[:column]} #{params2[:include]} '%#{params2[:word]}%')" 
+      between2 =" #{params2[:andor]} "
+    end
+    
+    if params3[:word].present?
+      sql_body3 = "(#{params3[:column]} #{params3[:include]} '%#{params3[:word]}%')" 
+      between3 =" #{params3[:andor]} "
+    end
+    
+    if params4[:word].present?
+      sql_body4 = "(#{params4[:column]} #{params4[:include]} '%#{params4[:word]}%')" 
+      between4 =" #{params4[:andor]} "
+    end
+    
+    #1
+    if params1[:word].present? && params2[:word].blank? && params3[:word].blank? && params4[:word].blank?
+      sql_body += sql_body1
+    end
+    
+    #2
+    if params1[:word].blank? && params2[:word].present? && params3[:word].blank? && params4[:word].blank?
+      sql_body += sql_body2
+    end
+    
+    #3
+    if params1[:word].blank? && params2[:word].blank? && params3[:word].present? && params4[:word].blank?
+      sql_body += sql_body3
+    end
+    
+    #4
+    if params1[:word].blank? && params2[:word].blank? && params3[:word].blank? && params4[:word].present?
+      sql_body += sql_body4
+    end
+    
+    #5
+    if params1[:word].present? && params2[:word].present? && params3[:word].blank? && params4[:word].blank?
+      sql_body += sql_body1 + between1 + sql_body2
+    end
+    
+    #6
+    if params1[:word].present? && params2[:word].blank? && params3[:word].present? && params4[:word].blank?
+      sql_body += sql_body1 + between1 + sql_body3
+    end
+    
+    #7
+    if params1[:word].present? && params2[:word].blank? && params3[:word].blank? && params4[:word].present?
+      sql_body += sql_body1 + between1 + sql_body4
+    end
+ 
+    #8
+    if params1[:word].present? && params2[:word].present? && params3[:word].present? && params4[:word].blank?
+      sql_body += sql_body1 + between1 + sql_body2 + between2 + sql_body3
+    end
+    
+    #9
+    if params1[:word].present? && params2[:word].present? && params3[:word].blank? && params4[:word].present?
+      sql_body += sql_body1 + between1 + sql_body2 + between2 + sql_body4
+    end
+    
+    #10
+    if params1[:word].present? && params2[:word].blank? && params3[:word].present? && params4[:word].present?
+      sql_body += sql_body1 + between1 + sql_body3 + between3 + sql_body4
+    end
+    
+    #11
+    if params1[:word].present? && params2[:word].present? && params3[:word].present? && params4[:word].present?
+      sql_body += sql_body1 + between1 + sql_body2 + between2 + sql_body3 + between3 + sql_body4
+    end
+    
+    #12
+    if params1[:word].blank? && params2[:word].present? && params3[:word].present? && params4[:word].blank?
+      sql_body += sql_body2 + between2 + sql_body3
+    end
+    
+    #13
+    if params1[:word].blank? && params2[:word].present? && params3[:word].blank? && params4[:word].present?
+      sql_body += sql_body2 + between2 + sql_body4
+    end
+    
+    #14
+    if params1[:word].blank? && params2[:word].present? && params3[:word].present? && params4[:word].present?
+      sql_body += sql_body2 + between2 + sql_body3 + between3 + sql_body4
+    end
+    
+    #15
+    if params1[:word].blank? && params2[:word].blank? && params3[:word].present? && params4[:word].present?
+      sql_body += sql_body3 + between3 + sql_body4
+    end
+    
+
+    
+    if sql_body.present?
+      sql = "select * from book_details where #{sql_body} order by id desc"
+      details_ids = BookDetail.find_by_sql(sql)
+      ids = []
+      details_ids.each do |qi|
+        ids.push(qi.id)
+      end
+      where(:id => ids)
+    else
+      where.not(id: nil)
+    end
+  end
+  
   # CSV一括登録用
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|

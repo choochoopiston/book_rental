@@ -9,7 +9,29 @@
   </div>
   <h2 class="heading">詳細検索</h2>
   <div class="container-fluid">
-    準備中・・・
+    <%= form_tag(book_details_path, method: "get", class: "form-inline") do %>
+      <%= select_tag 'search1[column]', options_for_select([["書籍名", "title"], ["著者", "writer"], ["出版社", "publisher"], ["フリーワード", "content"]]) %>
+      <%= text_field :search1, :word %>
+      <%= select :search1, :include, [["この言葉を含む", "ILIKE"], ["この言葉を含まない", "NOT ILIKE"]] %>
+      <%= select :search1, :andor, [["AND", "AND"], ["OR", "OR"]] %>
+      <br />
+      <%= select_tag 'search2[column]', options_for_select([["著者", "writer"], ["出版社", "publisher"], ["フリーワード", "content"], ["書籍名", "title"]]) %>
+      <%= text_field :search2, :word %>
+      <%= select :search2, :include, [["この言葉を含む", "ILIKE"], ["この言葉を含まない", "NOT ILIKE"]] %>
+      <%= select :search2, :andor, [["AND", "AND"], ["OR", "OR"]] %>
+      <br />
+      <%= select_tag 'search3[column]', options_for_select([["出版社", "publisher"], ["フリーワード", "content"], ["書籍名", "title"], ["著者", "writer"]]) %>
+      <%= text_field :search3, :word %>
+      <%= select :search3, :include, [["この言葉を含む", "ILIKE"], ["この言葉を含まない", "NOT ILIKE"]] %>
+      <%= select :search3, :andor, [["AND", "AND"], ["OR", "OR"]] %>
+      <br />
+      <%= select_tag 'search4[column]', options_for_select([["フリーワード", "content"], ["書籍名", "title"], ["著者", "writer"], ["出版社", "publisher"]]) %>
+      <%= text_field :search4, :word %>
+      <%= select :search4, :include, [["この言葉を含む", "ILIKE"], ["この言葉を含まない", "NOT ILIKE"]] %>
+      <br />
+      <%= submit_tag("詳細検索", class: "btn btn-success") %>
+      <input type="reset" value="クリア" />
+    <% end %>
   </div>
   <h2 class="heading">貸出履歴</h2>
   <div class="container-fluid">

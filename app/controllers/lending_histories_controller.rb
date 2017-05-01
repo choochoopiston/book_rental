@@ -6,7 +6,11 @@ class LendingHistoriesController < ApplicationController
   before_action :check_admin, only: [:index]
   
   def index
-    @lending_histories = LendingHistory.all
+    if params[:search].present? 
+      @lending_histories = LendingHistory.get_by_search(params[:search])
+    else
+      @lending_histories = LendingHistory.all
+    end
   end
   
   def update

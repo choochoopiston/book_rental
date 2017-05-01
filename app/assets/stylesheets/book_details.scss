@@ -2,9 +2,7 @@
     white-space: nowrap;
 }
 
-#book_details_index .table td#td_publisher {
-    white-space: nowrap;
-}
+
 
 .detail_colum {
     background: #7f7f7f;
@@ -16,11 +14,14 @@
     border: 1px solid #fff;
 }
 
-@media screen and (max-width: 767px) {
-    #td_content {
-        white-space: normal !important;
-    }
-    #td_writer {
-        white-space: normal !important;
+@media screen and (min-width: 992px) {
+    // #td_content {
+    //     white-space: normal !important;
+    // }
+    // #td_writer {
+    //     white-space: normal !important;
+    // }
+    #book_details_index .table td#td_publisher {
+        white-space: nowrap;
     }
 }
