@@ -1,7 +1,7 @@
 <h1>貸出状況一覧</h1>
 
 <!--<h2 class="heading">検索(準備中)</h2>-->
-<h3><span class="sub_heading">検索(準備中):</span></h3>
+<h3><span class="sub_heading">検索:</span></h3>
 <div class="container-fluid">
   <%= form_tag(lending_histories_path, method: "get", class: "form-inline") do %>
     <%= select_tag 'search[column]', options_for_select([["書籍名", "title"], ["借用者", "username"]]) %>

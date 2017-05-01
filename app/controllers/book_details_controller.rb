@@ -8,7 +8,7 @@ class BookDetailsController < ApplicationController
   def index
     if params[:simplesearch].present? 
       @search_words = params[:simplesearch].split(/[ ,　]/)
-      @book_details = BookDetail.get_by_multi_and_simplesearch(@search_words).page(params[:page])
+      @book_details = BookDetail.get_by_multi_or_simplesearch(@search_words).page(params[:page])
     elsif params[:search1].present?
       @search_words = []
       @search_words.push(params[:search1][:word], params[:search2][:word], params[:search3][:word], params[:search4][:word])

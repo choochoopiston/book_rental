@@ -18,7 +18,7 @@
           <%= text_field_tag :simplesearch, params[:simplesearch], class: "form-control" %>
           <%= submit_tag("簡易検索", class: "btn btn-success") %>
         <% end %>
-        ※書籍名、作者名、出版社名、詳細内容の一部で検索可能です。(複数キーワードOK)
+        ※書籍名、作者名、出版社名、詳細内容の一部で検索可能です。(複数キーワードOK→OR検索になります。)
       </div>
     </div>
   <% else %>
