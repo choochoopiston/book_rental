@@ -63,6 +63,7 @@ class BooksController < ApplicationController
       @lending_history.user = current_user
       @lending_history.return_date = Time.now + 14.days
       @book.save
+      UserMailer.lended_book(@lending_history).deliver
       redirect_to @book, notice: '本を借りました。'
     # elsif params[:history] == "return"
     #   @book.state = 1

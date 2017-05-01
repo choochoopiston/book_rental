@@ -22,6 +22,7 @@ class LendingHistoriesController < ApplicationController
           @lending_history.save!
           @lending_history.book.save!
         end
+        UserMailer.returned_book(@lending_history).deliver
         redirect_to @lending_history.book, notice: '本を返却しました。'
       rescue => e
         redirect_to @lending_history.book, notice: '本を返却できませんでした。'
