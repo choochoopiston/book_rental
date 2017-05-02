@@ -30,6 +30,7 @@ gem 'whenever', require: false
 gem 'dotenv-rails'
 
 gem 'kaminari'
+gem 'jquery-turbolinks'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

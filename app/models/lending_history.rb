@@ -45,17 +45,17 @@ class LendingHistory < ActiveRecord::Base
         @lending_histories = @lending_histories.where("created_at <= ?", to)
       else
       end
-      if search_params[:returned] == 1 && search_params[:lended] != 1 && search_params[:delayed] !=1
+      if search_params[:returned] == "1" && search_params[:lended] != "1" && search_params[:delayed] != "1"
         @lending_histories = @lending_histories.where.not(returned_date: nil)
-      elsif search_params[:returned] != 1 && search_params[:lended] == 1 && search_params[:delayed] !=1
+      elsif search_params[:returned] != "1" && search_params[:lended] == "1" && search_params[:delayed] != "1"
         @lending_histories = @lending_histories.where(returned_date: nil).where("return_date >= ?", Time.now)
-      elsif search_params[:returned] != 1 && search_params[:lended] != 1 && search_params[:delayed] ==1
+      elsif search_params[:returned] != "1" && search_params[:lended] != "1" && search_params[:delayed] == "1"
         @lending_histories = @lending_histories.where(returned_date: nil).where("return_date < ?", Time.now)
-      elsif search_params[:returned] == 1 && search_params[:lended] == 1 && search_params[:delayed] !=1
+      elsif search_params[:returned] == "1" && search_params[:lended] == "1" && search_params[:delayed] != "1"
         @lending_histories = @lending_histories.where("(returned_date != ?) OR (return_date >= ?)", nil, Time.now)
-      elsif search_params[:returned] == 1 && search_params[:lended] != 1 && search_params[:delayed] ==1
+      elsif search_params[:returned] == "1" && search_params[:lended] != "1" && search_params[:delayed] == "1"
         @lending_histories = @lending_histories.where("(returned_date != ?) OR (return_date < ?)", nil, Time.now)
-      elsif search_params[:returned] != 1 && search_params[:lended] == 1 && search_params[:delayed] ==1
+      elsif search_params[:returned] != "1" && search_params[:lended] == "1" && search_params[:delayed] == "1"
         @lending_histories = @lending_histories.where(returned_date: nil)
       else
       end

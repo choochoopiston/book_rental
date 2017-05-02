@@ -13,5 +13,7 @@ class CreateBookDetails < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    #間違って同じCSVを一括登録にしないようにするため
+    add_index :book_details, :title,                unique: true
   end
 end
