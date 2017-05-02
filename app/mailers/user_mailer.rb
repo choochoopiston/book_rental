@@ -15,6 +15,7 @@ class UserMailer < ApplicationMailer
         @email = lh.user.email
         @title = lh.book.book_detail.title
         @return_date = lh.return_date
+        @returned_date = lh.returned_date
         @lended_date = lh.created_at
         @book = lh.book
         mail to: "choochoopiston@gmail.com", subject: "【株式会社アド・書籍レンタル】本が返却されました。"
