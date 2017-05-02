@@ -17,7 +17,7 @@ class UserMailer < ApplicationMailer
         @return_date = lh.return_date
         @lended_date = lh.created_at
         @book = lh.book
-        mail to: "choochoopiston@gmail.com", subject: "【株式会社アド・書籍レンタル】本が変革されました。"
+        mail to: "choochoopiston@gmail.com", subject: "【株式会社アド・書籍レンタル】本が返却されました。"
     end
 
     def three_to_deadline(lh)
