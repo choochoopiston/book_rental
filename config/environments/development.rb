@@ -55,5 +55,7 @@ Rails.application.configure do
       password:             ENV["GMAIL_PASSWORD"],
       authentication:       'plain',
       enable_starttls_auto: true  }
+      
+  config.web_console.whitelisted_ips = '0.0.0.0/0'
   
 end

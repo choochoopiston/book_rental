@@ -1,4 +1,4 @@
-$(document).bind("page:load", function(){
+$(function(){
     $('#narrow_button').bind("click",function(){
         // 書籍名&含むを選択
         if ($('#search_column').val() == "title" && $('#search_include').val() == "yes") {
