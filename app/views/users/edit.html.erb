@@ -1,3 +1,10 @@
+<ol class="breadcrumb">
+  <li><%= link_to "管理者ページ", user_path(current_user) %></li>
+  <li><%= link_to "ユーザ一覧", users_path %></li>
+  <li><%= link_to "ユーザ詳細", user_path(@user) %></li>
+  <li class="active">ユーザ情報更新</li>
+</ol>
+
 <h1 class="heading">ユーザ情報更新</h1>
 
 <%= render 'form' %>

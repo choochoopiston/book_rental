@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+  <li><%= link_to "管理者ページ", user_path(current_user) %></li>
+  <li class="active">ユーザ一覧</li>
+</ol>
+
 <h1>ユーザ一覧 <br class="visible-xs" /><%= link_to '(新規ユーザ登録)', new_user_path, class: "small" %></h1>
 
 <div class="table-responsive">

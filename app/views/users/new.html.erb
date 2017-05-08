@@ -1,4 +1,10 @@
-<h1 class="heading">新規ユーザ登録 <br class="visible-xs" /><%= link_to '(ユーザ一覧)', users_path, class: "small" %></h1>
+<ol class="breadcrumb">
+  <li><%= link_to "管理者ページ", user_path(current_user) %></li>
+  <li><%= link_to "ユーザ一覧", users_path %></li>
+  <li class="active">新規ユーザ登録</li>
+</ol>
+
+<h1 class="heading">新規ユーザ登録</h1>
 
 <%= render 'form' %>
 

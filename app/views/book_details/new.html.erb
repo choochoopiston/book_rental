@@ -1,3 +1,7 @@
-<h1 class="heading">新規書籍情報登録 <br class="visible-xs" /><%= link_to '書籍情報一覧(検索結果一覧)ページへ', book_details_path, class: "small" %></h1>
-
+<ol class="breadcrumb">
+  <li><%= link_to "Top", root_path %></li>
+  <li><%= link_to "書籍情報一覧", book_details_path %></li>
+  <li class="active">新規書籍情報登録</li>
+</ol>
+<h1 class="heading">新規書籍情報登録</h1>
 <%= render 'form' %>
