@@ -4,3 +4,11 @@
     padding: 0 10px 10px;
     background: #81C714;
 }
+
+
+
+@media (max-width: 767px) {
+    #header h1#logo img {
+        width: 65px;
+    }
+}
