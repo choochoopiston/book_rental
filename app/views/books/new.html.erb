@@ -1,3 +1,9 @@
-<h1 class="heading">蔵書新規登録 <br class="visible-xs" /><%= link_to '(蔵書一覧)', books_path, class: "small" %></h1>
+<ol class="breadcrumb">
+  <li><%= link_to "管理者ページ", root_path %></li>
+  <li><%= link_to "蔵書一覧", books_path %></li>
+  <li class="active">蔵書新規登録覧</li>
+</ol>
+
+<h1 class="heading">蔵書新規登録</h1>
 
 <%= render 'form' %>
