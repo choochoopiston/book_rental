@@ -1,3 +1,7 @@
+<ol class="breadcrumb">
+  <li><%= link_to "Top", root_path %></li>
+  <li class="active">貸出履歴(マイページ)</li> 
+</ol>
 <h2><%= "'#{@user.username}'さんの貸出履歴" %></h2>
 貸出履歴数: <%= @user.lending_histories.count %>件<br>
 
@@ -61,7 +65,6 @@
     </li>
   </ul>
   <h2 class="heading">蔵書検索</h2>
-  準備中・・・
   <ul>
     <li>
       <%= link_to '新規蔵書を登録(既存の本を登録）', new_book_path %>

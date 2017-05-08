@@ -1,4 +1,12 @@
-<h1 class="heading">蔵書情報の更新 <br class="visible-xs" /><%= link_to '(蔵書詳細へ戻る)', @book, class: "small" %></h1>
+<ol class="breadcrumb">
+    <li><%= link_to "Top", root_path %></li>
+    <li><%= link_to "書籍情報一覧", book_details_path %></li> 
+    <li><%= link_to '書籍詳細', @book.book_detail %></li> 
+    <li><%= link_to '蔵書詳細', @book %></li> 
+    <li class="active">蔵書情報編集</li>
+</ol>
+
+<h1 class="heading">蔵書情報の更新</h1>
 
 <%= render 'form' %>
 

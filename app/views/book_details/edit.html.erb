@@ -1,5 +1,11 @@
-<h1 class="heading">書籍情報を更新 <br class="visible-xs" /><%= link_to '書籍情報個別ページへ', @book_detail, class: "small" %></h1>
+<ol class="breadcrumb">
+    <li><%= link_to "Top", root_path %></li>
+    <li><%= link_to "書籍情報一覧", book_details_path %></li> 
+    <li><%= link_to '書籍詳細', @book_detail %></li> 
+    <li class="active">書籍情報編集</li> 
+</ol>
 
+<h1 class="heading">書籍情報を更新</h1>
 
 <%= render 'form' %>
 

@@ -1,67 +1,70 @@
-<h1>貸出状況一覧</h1>
-
-<!--<h2 class="heading">検索(準備中)</h2>-->
-<h3><span class="sub_heading">検索:</span></h3>
-<div class="container-fluid">
-  <%= form_tag(lending_histories_path, method: "get", class: "form-inline") do %>
-    <%= select_tag 'search[column]', options_for_select([["書籍名", "title"], ["借用者", "username"]]) %>
-    <%= text_field :search, :word %>
-    <%= select :search, :include, [["この言葉を含む", "ILIKE"], ["この言葉を含まない", "NOT ILIKE"]] %>
-    <br />
-    <%= select_tag 'search[start_year]', options_for_select([["2017", "2017"], ["2018", "2018"], ["2019", "2019"]]), :include_blank => true %>年
-    <%= select_tag 'search[start_month]', options_for_select([["1", "1"], ["2", "2"], ["3", "3"],["4", "4"], ["5", "5"], ["6", "6"],["7", "7"], ["8", "8"], ["9", "9"],["10", "10"], ["11", "11"], ["12", "12"]]), :include_blank => true  %>月から
-    <%= select_tag 'search[end_year]', options_for_select([["2017", "2017"], ["2018", "2018"], ["2019", "2019"]]), :include_blank => true %>年
-    <%= select_tag 'search[end_month]', options_for_select([["1", "1"], ["2", "2"], ["3", "3"],["4", "4"], ["5", "5"], ["6", "6"],["7", "7"], ["8", "8"], ["9", "9"],["10", "10"], ["11", "11"], ["12", "12"]]), :include_blank => true  %>月までの期間
-    <br />
-    <%= check_box_tag 'search[returned]' %> <%= label_tag :search_returned, "返却済" %>
-    <%= check_box_tag 'search[lended]' %> <%= label_tag :search_lended, "貸出中" %>
-    <%= check_box_tag 'search[delayed]' %> <%= label_tag :search_delayed, "延滞中" %>
-    <br />
-    <%= submit_tag("検索", class: "btn btn-success btn-xs") %>
-  <% end %>  
-  <!--<%= button_tag(type: 'button', id: 'lh_narrow_button', class: "btn btn-success btn-xs") do %>-->
-  <!--  <%= "検索" %>-->
-  <!--<% end %>-->
-  <!--<%= button_tag(type: 'button', id: 'lh_narrow_cancel_button', class: "btn btn-warning btn-xs") do %>-->
-  <!--  <%= "キャンセル" %>-->
-  <!--<% end %>-->
-</div>
-
-<br /><br />
+<div id="lending_histories_index">
+  <ol class="breadcrumb">
+    <li><%= link_to "Top", root_path %></li>
+    <li><%= link_to "管理者画面", user_path(current_user) %></li>
+    <li class="active">貸出状況一覧</li> 
+  </ol>
+  <h1>貸出状況一覧</h1>
+  <h3><span class="sub_heading">検索:</span></h3>
+  <div class="container-fluid">
+    <%= form_tag(lending_histories_path, method: "get", class: "form-inline") do %>
+      <%= select_tag 'search[column]', options_for_select([["書籍名", "title"], ["借用者", "username"]]) %>
+      <%= text_field :search, :word %>
+      <%= select :search, :include, [["この言葉を含む", "ILIKE"], ["この言葉を含まない", "NOT ILIKE"]] %>
+      <br />
+      <%= select_tag 'search[start_year]', options_for_select([["2017", "2017"], ["2018", "2018"], ["2019", "2019"]]), :include_blank => true %>年
+      <%= select_tag 'search[start_month]', options_for_select([["1", "1"], ["2", "2"], ["3", "3"],["4", "4"], ["5", "5"], ["6", "6"],["7", "7"], ["8", "8"], ["9", "9"],["10", "10"], ["11", "11"], ["12", "12"]]), :include_blank => true  %>月から
+      <%= select_tag 'search[end_year]', options_for_select([["2017", "2017"], ["2018", "2018"], ["2019", "2019"]]), :include_blank => true %>年
+      <%= select_tag 'search[end_month]', options_for_select([["1", "1"], ["2", "2"], ["3", "3"],["4", "4"], ["5", "5"], ["6", "6"],["7", "7"], ["8", "8"], ["9", "9"],["10", "10"], ["11", "11"], ["12", "12"]]), :include_blank => true  %>月までの期間
+      <br />
+      <%= check_box_tag 'search[returned]' %> <%= label_tag :search_returned, "返却済" %>
+      <%= check_box_tag 'search[lended]' %> <%= label_tag :search_lended, "貸出中" %>
+      <%= check_box_tag 'search[delayed]' %> <%= label_tag :search_delayed, "延滞中" %>
+      <br />
+      <%= submit_tag("検索", class: "btn btn-success btn-xs") %>
+    <% end %>  
+    <!--<%= button_tag(type: 'button', id: 'lh_narrow_button', class: "btn btn-success btn-xs") do %>-->
+    <!--  <%= "検索" %>-->
+    <!--<% end %>-->
+    <!--<%= button_tag(type: 'button', id: 'lh_narrow_cancel_button', class: "btn btn-warning btn-xs") do %>-->
+    <!--  <%= "キャンセル" %>-->
+    <!--<% end %>-->
+  </div>
   
-  
-
-<div class="table-responsive">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>No.</th>
-        <th>貸出日</th>
-        <th>蔵書コード</th>
-        <th>書籍名</th>
-        <th colspan="2">借用者</th>
-        <th>返却期限</th>
-        <th>貸出状況</th>
-      </tr>
-    </thead>
-  
-    <tbody>
-      <% if @lending_histories.present? %>
-        <% @lending_histories.order("created_at DESC").each_with_index do |lending_history, index| %>
-          <tr>
-            <td><%= index + 1 %></td>
-            <td><%= lending_history.created_at.to_s(:date) %></td>
-            <td><%= link_to lending_history.book.code, lending_history.book %></td>
-            <td><%= link_to lending_history.book.book_detail.title, lending_history.book.book_detail %></td>
-            <td><%= lending_history.user.employee_id %></td>
-            <td><%= lending_history.user.username %></td>
-            <td><%= lending_history.return_date.to_s(:date) %></td>
-            <td><%= lending_history.lending_situation %></td>
-          </tr>
+  <br /><br />
+    
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>貸出日</th>
+          <th>蔵書コード</th>
+          <th>書籍名</th>
+          <th colspan="2">借用者</th>
+          <th>返却期限</th>
+          <th>貸出状況</th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <% if @lending_histories.present? %>
+          <% @lending_histories.order("created_at DESC").each_with_index do |lending_history, index| %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= lending_history.created_at.to_s(:date) %></td>
+              <td><%= link_to lending_history.book.code, lending_history.book %></td>
+              <td><%= link_to lending_history.book.book_detail.title, lending_history.book.book_detail %></td>
+              <td><%= lending_history.user.employee_id %></td>
+              <td><%= lending_history.user.username %></td>
+              <td><%= lending_history.return_date.to_s(:date) %></td>
+              <td><%= lending_history.lending_situation %></td>
+            </tr>
+          <% end %>
+        <% else %>
+        該当の貸出履歴はありません。
         <% end %>
-      <% else %>
-      該当の貸出履歴はありません。
-      <% end %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 </div>

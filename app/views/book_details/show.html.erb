@@ -1,6 +1,11 @@
 <div id="book_details_show">
+  <ol class="breadcrumb">
+    <li><%= link_to "Top", root_path %></li>
+    <li><%= link_to "書籍情報一覧", book_details_path %></li> 
+    <li class="active">書籍詳細</li> 
+  </ol>
   <h2>書籍詳細 
-      <%= link_to '(書籍情報一覧へ)', book_details_path, class: "small" %> 
+      <!--<%= link_to '(書籍情報一覧へ)', book_details_path, class: "small" %> -->
       <%= link_to '書籍情報を編集', edit_book_detail_path(@book_detail), class: "btn btn-success btn-xs" if current_user && current_user.admin == true %>
       <%= link_to '削除', book_detail_path(@book_detail), method: :delete, data: {confirm: "本当に削除しますか？付随する蔵書データもされます。
       "}, class: "btn btn-danger btn-xs" if current_user && current_user.admin == true %>

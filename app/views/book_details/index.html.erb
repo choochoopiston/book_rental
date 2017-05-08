@@ -1,4 +1,8 @@
 <div id="book_details_index">
+  <ol class="breadcrumb">
+    <li><%= link_to "Top", root_path %></li>
+    <li class="active">書籍情報(検索結果)一覧</li>
+  </ol>
   <h2 class="heading">検索結果</h2>
   <% if @search_words.present? %>
     <% sentence = '' %>

@@ -1,6 +1,12 @@
+<ol class="breadcrumb">
+    <li><%= link_to "Top", root_path %></li>
+    <li><%= link_to "書籍情報一覧", book_details_path %></li> 
+    <li><%= link_to '書籍詳細', @book.book_detail %></li> 
+    <li class="active">蔵書情報</li>
+</ol>
+
 <div id="book__show">
   <h2>蔵書詳細 
-      <%= link_to '(書籍情報へ)', book_detail_path(@book.book_detail.id), class: "small" %> 
       <%= link_to '蔵書情報を編集', edit_book_path(@book), class: "btn btn-success btn-xs" if current_user && current_user.admin == true %>
   </h2>
   <!--<%= link_to 'Back', books_path %>-->
