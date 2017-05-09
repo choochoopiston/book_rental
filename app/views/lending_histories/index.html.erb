@@ -2,26 +2,41 @@
   <ol class="breadcrumb">
     <li><%= link_to "Top", root_path %></li>
     <li><%= link_to "管理者画面", user_path(current_user) %></li>
-    <li class="active">貸出状況一覧</li> 
+    <li class="active"><%= link_to '貸出状況一覧', lending_histories_path %></li> 
   </ol>
   <h1>貸出状況一覧</h1>
   <h3><span class="sub_heading">検索:</span></h3>
   <div class="container-fluid">
     <%= form_tag(lending_histories_path, method: "get", class: "form-inline") do %>
-      <%= select_tag 'search[column]', options_for_select([["書籍名", "title"], ["借用者", "username"]]) %>
-      <%= text_field :search, :word %>
-      <%= select :search, :include, [["この言葉を含む", "ILIKE"], ["この言葉を含まない", "NOT ILIKE"]] %>
+      <% if params[:search].present? %>
+        <%= select_tag 'search[column]', options_for_select([["書籍名", "title"], ["借用者", "username"]], params[:search][:column]) %>
+        <%= text_field_tag 'search[word]', params[:search][:word] %>
+        <%= select_tag 'search[include]', options_for_select([["この言葉を含む", "ILIKE"], ["この言葉を含まない", "NOT ILIKE"]], params[:search][:include]) %>
+        <br />
+        貸出日：<%= select_tag 'search[start_year]', options_for_select([["#{Time.now.year - 2}", "#{Time.now.year - 2}"], ["#{Time.now.year - 1}", "#{Time.now.year - 1}"], ["#{Time.now.year}", "#{Time.now.year}"]], params[:search][:start_year]) %>年
+        <%= select_tag 'search[start_month]', options_for_select([["1", "1"], ["2", "2"], ["3", "3"],["4", "4"], ["5", "5"], ["6", "6"],["7", "7"], ["8", "8"], ["9", "9"],["10", "10"], ["11", "11"], ["12", "12"]], params[:search][:start_month]) %>月から
+        <%= select_tag 'search[end_year]', options_for_select([["#{Time.now.year - 2}", "#{Time.now.year - 2}"], ["#{Time.now.year - 1}", "#{Time.now.year - 1}"], ["#{Time.now.year}", "#{Time.now.year}"]], params[:search][:end_year]) %>年
+        <%= select_tag 'search[end_month]', options_for_select([["1", "1"], ["2", "2"], ["3", "3"],["4", "4"], ["5", "5"], ["6", "6"],["7", "7"], ["8", "8"], ["9", "9"],["10", "10"], ["11", "11"], ["12", "12"]], params[:search][:end_month]) %>月までの期間
+        <br />
+        <%= check_box_tag 'search[returned]', "1", params[:search][:returned] %> <%= label_tag :search_returned, "返却済" %>
+        <%= check_box_tag 'search[lended]', "1", params[:search][:lended] %> <%= label_tag :search_lended, "貸出中" %>
+        <%= check_box_tag 'search[delayed]', "1", params[:search][:delayed] %> <%= label_tag :search_delayed, "延滞中" %>
+      <% else %>
+        <%= select_tag 'search[column]', options_for_select([["書籍名", "title"], ["借用者", "username"]]) %>
+        <%= text_field_tag 'search[word]' %>
+        <%= select :search, :include, [["この言葉を含む", "ILIKE"], ["この言葉を含まない", "NOT ILIKE"]] %>
+        <br />
+        貸出日：<%= select_tag 'search[start_year]', options_for_select([["#{Time.now.year - 2}", "#{Time.now.year - 2}"], ["#{Time.now.year - 1}", "#{Time.now.year - 1}"], ["#{Time.now.year}", "#{Time.now.year}"]], :selected => "#{Time.now.year}") %>年
+        <%= select_tag 'search[start_month]', options_for_select([["1", "1"], ["2", "2"], ["3", "3"],["4", "4"], ["5", "5"], ["6", "6"],["7", "7"], ["8", "8"], ["9", "9"],["10", "10"], ["11", "11"], ["12", "12"]], :selected => "#{Time.now.month- 3}") %>月から
+        <%= select_tag 'search[end_year]', options_for_select([["#{Time.now.year - 2}", "#{Time.now.year - 2}"], ["#{Time.now.year - 1}", "#{Time.now.year - 1}"], ["#{Time.now.year}", "#{Time.now.year}"]], :selected => "#{Time.now.year}") %>年
+        <%= select_tag 'search[end_month]', options_for_select([["1", "1"], ["2", "2"], ["3", "3"],["4", "4"], ["5", "5"], ["6", "6"],["7", "7"], ["8", "8"], ["9", "9"],["10", "10"], ["11", "11"], ["12", "12"]], :selected => "#{Time.now.month}") %>月までの期間
+        <br />
+        <%= check_box_tag 'search[returned]', "1" %><%= label_tag :search_returned, "返却済" %>
+        <%= check_box_tag 'search[lended]', "1" %><%= label_tag :search_lended, "貸出中" %>
+        <%= check_box_tag 'search[delayed]', "1" %><%= label_tag :search_delayed, "延滞中" %>
+      <% end %>
       <br />
-      <%= select_tag 'search[start_year]', options_for_select([["2017", "2017"], ["2018", "2018"], ["2019", "2019"]]), :include_blank => true %>年
-      <%= select_tag 'search[start_month]', options_for_select([["1", "1"], ["2", "2"], ["3", "3"],["4", "4"], ["5", "5"], ["6", "6"],["7", "7"], ["8", "8"], ["9", "9"],["10", "10"], ["11", "11"], ["12", "12"]]), :include_blank => true  %>月から
-      <%= select_tag 'search[end_year]', options_for_select([["2017", "2017"], ["2018", "2018"], ["2019", "2019"]]), :include_blank => true %>年
-      <%= select_tag 'search[end_month]', options_for_select([["1", "1"], ["2", "2"], ["3", "3"],["4", "4"], ["5", "5"], ["6", "6"],["7", "7"], ["8", "8"], ["9", "9"],["10", "10"], ["11", "11"], ["12", "12"]]), :include_blank => true  %>月までの期間
-      <br />
-      <%= check_box_tag 'search[returned]' %> <%= label_tag :search_returned, "返却済" %>
-      <%= check_box_tag 'search[lended]' %> <%= label_tag :search_lended, "貸出中" %>
-      <%= check_box_tag 'search[delayed]' %> <%= label_tag :search_delayed, "延滞中" %>
-      <br />
-      <%= submit_tag("検索", class: "btn btn-success btn-xs") %>
+      <%= submit_tag("検索", class: "btn btn-success") %>
     <% end %>  
     <!--<%= button_tag(type: 'button', id: 'lh_narrow_button', class: "btn btn-success btn-xs") do %>-->
     <!--  <%= "検索" %>-->

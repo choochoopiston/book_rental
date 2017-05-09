@@ -5,19 +5,23 @@ class LendingHistory < ActiveRecord::Base
   def self.get_by_search(search_params)
     @lending_histories = LendingHistory.all
     if search_params[:word].present?
-      @lending_histories = @lending_histories.joins({:book => :book_detail}).where("book_details.#{search_params[:column]} #{search_params[:include]} '%#{search_params[:word]}%'")
-      if search_params[:start_year].present? && search_params[:end_year].present?
+      if search_params[:column] == "title"
+        @lending_histories = @lending_histories.joins({:book => :book_detail}).where("book_details.#{search_params[:column]} #{search_params[:include]} '%#{search_params[:word]}%'")
+      else
+        @lending_histories = @lending_histories.joins(:user).where("users.#{search_params[:column]} #{search_params[:include]} '%#{search_params[:word]}%'")
+      end
+      # if search_params[:start_year].present? && search_params[:end_year].present?
         start_time = DateTime.new(search_params[:start_year].to_i, search_params[:start_month].to_i)
         end_time = DateTime.new(search_params[:end_year].to_i, search_params[:end_month].to_i).end_of_month
-        @lending_histories = @lending_histories.where("created_at between '#{start_time}' and '#{end_time}'")
-      elsif search_params[:start_year].present? && search_params[:end_year].blank?
-        from = DateTime.new(search_params[:start_year].to_i, search_params[:start_month].to_i)
-        @lending_histories = @lending_histories.where("created_at >= ?", from)
-      elsif search_params[:start_year].blank? && search_params[:end_year].present?
-        to = DateTime.new(search_params[:end_year].to_i, search_params[:end_month].to_i).end_of_month
-        @lending_histories = @lending_histories.where("created_at <= ?", to)
-      else
-      end
+        @lending_histories = @lending_histories.where("lending_histories.created_at between '#{start_time}' and '#{end_time}'")
+      # elsif search_params[:start_year].present? && search_params[:end_year].blank?
+      #   from = DateTime.new(search_params[:start_year].to_i, search_params[:start_month].to_i)
+      #   @lending_histories = @lending_histories.where("created_at >= ?", from)
+      # elsif search_params[:start_year].blank? && search_params[:end_year].present?
+      #   to = DateTime.new(search_params[:end_year].to_i, search_params[:end_month].to_i).end_of_month
+      #   @lending_histories = @lending_histories.where("created_at <= ?", to)
+      # else
+      # end
       if search_params[:returned] == "1" && search_params[:lended] != "1" && search_params[:delayed] != "1"
         @lending_histories = @lending_histories.where.not(returned_date: nil)
       elsif search_params[:returned] != "1" && search_params[:lended] == "1" && search_params[:delayed] != "1"
@@ -25,26 +29,34 @@ class LendingHistory < ActiveRecord::Base
       elsif search_params[:returned] != "1" && search_params[:lended] != "1" && search_params[:delayed] == "1"
         @lending_histories = @lending_histories.where(returned_date: nil).where("return_date < ?", Time.now)
       elsif search_params[:returned] == "1" && search_params[:lended] == "1" && search_params[:delayed] != "1"
-        @lending_histories = @lending_histories.where("(returned_date != ?) OR (return_date >= ?)", nil, Time.now)
+        # @lending_histories = @lending_histories.where("(returned_date != ?) OR (return_date >= ?)", nil, Time.now)
+        @lending_histories1 = @lending_histories.where.not(returned_date: nil)
+        @lending_histories2 = @lending_histories.where("return_date >= ?", Time.now)
+        @lh_ids = @lending_histories1.pluck(:id) + @lending_histories2.pluck(:id)
+        @lending_histories = LendingHistory.where(id: @lh_ids)
       elsif search_params[:returned] == "1" && search_params[:lended] != "1" && search_params[:delayed] == "1"
-        @lending_histories = @lending_histories.where("(returned_date != ?) OR (return_date < ?)", nil, Time.now)
+        # @lending_histories = @lending_histories.where("(returned_date != ?) OR (return_date < ?)", nil, Time.now)
+        @lending_histories1 = @lending_histories.where.not(returned_date: nil)
+        @lending_histories2 = @lending_histories.where("return_date < ?", Time.now)
+        @lh_ids = @lending_histories1.pluck(:id) + @lending_histories2.pluck(:id)
+        @lending_histories = LendingHistory.where(id: @lh_ids)
       elsif search_params[:returned] != "1" && search_params[:lended] == "1" && search_params[:delayed] == "1"
         @lending_histories = @lending_histories.where(returned_date: nil)
       else
       end
     else
-      if search_params[:start_year].present? && search_params[:end_year].present?
+      # if search_params[:start_year].present? && search_params[:end_year].present?
         start_time = DateTime.new(search_params[:start_year].to_i, search_params[:start_month].to_i)
         end_time = DateTime.new(search_params[:end_year].to_i, search_params[:end_month].to_i).end_of_month
         @lending_histories = @lending_histories.where("created_at between '#{start_time}' and '#{end_time}'")
-      elsif search_params[:start_year].present? && search_params[:end_year].blank?
-        from = DateTime.new(search_params[:start_year].to_i, search_params[:start_month].to_i)
-        @lending_histories = @lending_histories.where("created_at >= ?", from)
-      elsif search_params[:start_year].blank? && search_params[:end_year].present?
-        to = DateTime.new(search_params[:end_year].to_i, search_params[:end_month].to_i).end_of_month
-        @lending_histories = @lending_histories.where("created_at <= ?", to)
-      else
-      end
+      # elsif search_params[:start_year].present? && search_params[:end_year].blank?
+      #   from = DateTime.new(search_params[:start_year].to_i, search_params[:start_month].to_i)
+      #   @lending_histories = @lending_histories.where("created_at >= ?", from)
+      # elsif search_params[:start_year].blank? && search_params[:end_year].present?
+      #   to = DateTime.new(search_params[:end_year].to_i, search_params[:end_month].to_i).end_of_month
+      #   @lending_histories = @lending_histories.where("created_at <= ?", to)
+      # else
+      # end
       if search_params[:returned] == "1" && search_params[:lended] != "1" && search_params[:delayed] != "1"
         @lending_histories = @lending_histories.where.not(returned_date: nil)
       elsif search_params[:returned] != "1" && search_params[:lended] == "1" && search_params[:delayed] != "1"
@@ -52,9 +64,17 @@ class LendingHistory < ActiveRecord::Base
       elsif search_params[:returned] != "1" && search_params[:lended] != "1" && search_params[:delayed] == "1"
         @lending_histories = @lending_histories.where(returned_date: nil).where("return_date < ?", Time.now)
       elsif search_params[:returned] == "1" && search_params[:lended] == "1" && search_params[:delayed] != "1"
-        @lending_histories = @lending_histories.where("(returned_date != ?) OR (return_date >= ?)", nil, Time.now)
+        # @lending_histories = @lending_histories.where("(returned_date != ?) OR (return_date >= ?)", nil, Time.now)
+        @lending_histories1 = @lending_histories.where.not(returned_date: nil)
+        @lending_histories2 = @lending_histories.where("return_date >= ?", Time.now)
+        @lh_ids = @lending_histories1.pluck(:id) + @lending_histories2.pluck(:id)
+        @lending_histories = LendingHistory.where(id: @lh_ids)
       elsif search_params[:returned] == "1" && search_params[:lended] != "1" && search_params[:delayed] == "1"
-        @lending_histories = @lending_histories.where("(returned_date != ?) OR (return_date < ?)", nil, Time.now)
+        # @lending_histories = @lending_histories.where("(returned_date != ?) OR (return_date < ?)", nil, Time.now)
+        @lending_histories1 = @lending_histories.where.not(returned_date: nil)
+        @lending_histories2 = @lending_histories.where("return_date < ?", Time.now)
+        @lh_ids = @lending_histories1.pluck(:id) + @lending_histories2.pluck(:id)
+        @lending_histories = LendingHistory.where(id: @lh_ids)
       elsif search_params[:returned] != "1" && search_params[:lended] == "1" && search_params[:delayed] == "1"
         @lending_histories = @lending_histories.where(returned_date: nil)
       else
