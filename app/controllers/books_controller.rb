@@ -6,7 +6,11 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    @books = Book.all
+    if params[:csv] == "yes"
+      @books = Book.all
+    else
+      @books = Book.page(params[:page])
+    end
     
     respond_to do |format|
       format.html do

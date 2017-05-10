@@ -22,7 +22,7 @@ ja:
         state: 貸出状況
       book_detail:
         isbn_code: 図書コード(ISBNコード:ハイフンなし13桁)
-        c_code: 分類コード(4桁)
+        c_code: 分類Cコード(C以外の数字4桁)
         title: 書籍名
         writer: 著者
         publisher: 出版社

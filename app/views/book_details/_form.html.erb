@@ -55,38 +55,45 @@
   </div>
   
   <% unless params[:book_detail_only] %>
-  <%= f.fields_for :books do |b| %>
-    <fieldset>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-9">
-        <legend id="original">▼蔵書も同時に登録・修正</legend>
+    <% n = 0 %>
+    <%= f.fields_for :books do |b| %>
+      <fieldset>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-9">
+          <legend id="original">▼蔵書も同時に登録・修正</legend>
+        </div>
       </div>
-    </div>
-    
-    <div class="form-group">
-    <%= b.label :code, "蔵書コード", class: "col-sm-3 control-label" %>
-    <div class="col-sm-8">
-      <%= b.text_field :code, class: "form-control" %>
-    </div>
-    </div>
-
-    <div class="form-group">
-    <%= b.label :place, "配架場所", class: "col-sm-3 control-label" %>
-    <div class="col-sm-8">
-      <%= b.radio_button :place, 0 %> <%= b.label :place_0, "研修センター", class: "control-label" %>
-      <%= b.radio_button :place, 1 %> <%= b.label :place_1, "本社", class: "control-label" %>
-    </div>
-    </div>
-
-    <div class="form-group">
-    <%= b.label :state, "貸出状況", class: "col-sm-3 control-label" %>
-    <div class="col-sm-8">
-      <%= b.radio_button :state, 0 %> <%= b.label :state_0, "貸出厳禁", class: "control-label" %>
-      <%= b.radio_button :state, 1 %> <%= b.label :state_1, "貸出可能", class: "control-label" %>
-    </div>
-    </div>
-    </fieldset>
-  <% end %>
+      
+      <div class="form-group">
+      <%= b.label :code, "蔵書コード", class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= b.text_field :code, class: "form-control" %>
+      </div>
+      </div>
+  
+      <div class="form-group">
+      <%= b.label :place, "配架場所", class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= b.radio_button :place, 0 %> <%= b.label :place_0, "研修センター", class: "control-label" %>
+        <%= b.radio_button :place, 1 %> <%= b.label :place_1, "本社", class: "control-label" %>
+      </div>
+      </div>
+  
+      <div class="form-group">
+        <%= b.label :state, "貸出状況", class: "col-sm-3 control-label" %>
+        <div class="col-sm-8">
+          <% if @book_detail.books[n][:state] == 2 %>
+            貸出中のため、変更できません。
+            <%= b.hidden_field :state %><br>
+          <% else %>
+            <%= b.radio_button :state, 0 %> <%= b.label :state_0, "貸出厳禁", class: "control-label" %>
+            <%= b.radio_button :state, 1 %> <%= b.label :state_1, "貸出可能", class: "control-label" %>
+          <% end %>
+        </div>
+      </div>
+      </fieldset>
+      <% n += 1 %>
+    <% end %>
   <% end %>
 
   <div class="form-group">

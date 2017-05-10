@@ -14,19 +14,29 @@
     <div class="row">
       <div class="col-sm-3 detail_colum">図書コード</div>
       <div class="col-sm-9 detail_content"><%= @book_detail.isbn_code %></div>
+    </div>
+    <div class="row">
       <div class="col-sm-3 detail_colum">書籍名</div>
       <div class="col-sm-9 detail_content"><%= @book_detail.title %></div>
+    </div>
+    <div class="row">
       <div class="col-sm-3 detail_colum">分類</div>
-      <div class="col-sm-1 detail_colum">対象</div>
-      <div class="col-sm-2 detail_content"><%= @book_detail.c_code %></div>
-      <div class="col-sm-1 detail_colum">形態</div>
-      <div class="col-sm-2 detail_content">(仮)</div>
-      <div class="col-sm-1 detail_colum">内容</div>
-      <div class="col-sm-2 detail_content">(仮)</div>
+      <div class="col-xs-4 col-sm-1 detail_subcolum">対象</div>
+      <div class="col-xs-8 col-sm-2 detail_content"><%= sale_for(@book_detail.c_code.to_s.slice(0)) %></div>
+      <div class="col-xs-4 col-sm-1 detail_subcolum">形態</div>
+      <div class="col-xs-8 col-sm-2 detail_content"><%= published_in(@book_detail.c_code.to_s.slice(1)) %></div>
+      <div class="col-xs-4 col-sm-1 detail_subcolum">内容</div>
+      <div class="col-xs-8 col-sm-2 detail_content"><%= content_for(@book_detail.c_code.to_s.slice(2,2)) %></div>
+    </div>
+    <div class="row">
       <div class="col-sm-3 detail_colum">著者</div>
       <div class="col-sm-9 detail_content"><%= @book_detail.writer %></div>
+    </div>
+    <div class="row">
       <div class="col-sm-3 detail_colum">出版社</div>
       <div class="col-sm-9 detail_content"><%= @book_detail.publisher %></div>
+    </div>
+    <div class="row">
       <div class="col-sm-3 detail_colum">詳細</div>
       <div class="col-sm-9 detail_content"><%= @book_detail.content %></div>
     </div>
@@ -35,27 +45,29 @@
       <%= link_to '新規蔵書情報を登録', new_book_path(book_detail: @book_detail.id), class: "btn btn-success btn-xs" if current_user && current_user.admin == true %>
   </h2>
   <h3>所蔵数<%= @book_detail.books.count %>冊</h3>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>No.</th>
-        <th>配架場所</th>
-        <th>蔵書コード</th>
-        <th>貸出状況</th>
-        <th>返却予定日</th>
-      </tr>
-    </thead>
-  
-    <tbody>
-      <% @book_detail.books.each_with_index do |book, index| %>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
         <tr>
-          <td><%= index + 1 %></td>
-          <td><%= place_if(book.place) %></td>
-          <td><%= link_to "#{book.code}", book_path(book) %></td>
-          <td><%= state_if(book.state) %></td>
-          <td><%= book.lending_histories.where(returned_date: nil).first.return_date if book.state == 2 %></td>
+          <th>No.</th>
+          <th>配架場所</th>
+          <th>蔵書コード</th>
+          <th>貸出状況</th>
+          <th>返却予定日</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+    
+      <tbody>
+        <% @book_detail.books.each_with_index do |book, index| %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= place_if(book.place) %></td>
+            <td><%= link_to "#{book.code}", book_path(book) %></td>
+            <td><%= state_if(book.state) %></td>
+            <td><%= book.lending_histories.where(returned_date: nil).first.return_date.to_s(:date) if book.state == 2 %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -7,7 +7,11 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    if params[:csv] == "yes"
+      @users = User.all
+    else
+      @users = User.page(params[:page])
+    end
     
     respond_to do |format|
       format.html do

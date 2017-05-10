@@ -14,3 +14,10 @@ ja:
   writer: 著者
   publisher: 出版社
   content: 詳細内容
+  views:
+    pagination:
+      first: "&laquo; 最初"
+      last: "最後 &raquo;"
+      previous: "&lsaquo; 前"
+      next: "次 &rsaquo;"
+      truncate: "&hellip;"

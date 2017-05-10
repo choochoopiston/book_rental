@@ -15,11 +15,11 @@ class BookDetailsController < ApplicationController
       @search_words.push(params[:search1][:word], params[:search2][:word], params[:search3][:word], params[:search4][:word])
       # @book_details = BookDetail.get_by_details(params[:search1], params[:search2], params[:search3], params[:search4]).page(params[:page])
       @book_details = BookDetail.get_by_details(params[:search1], params[:search2], params[:search3], params[:search4])
-
     else
       @search_words = []
       # @book_details = BookDetail.page(params[:page])
       @book_details = BookDetail.all
+      
 
     end
     
@@ -42,7 +42,7 @@ class BookDetailsController < ApplicationController
   # GET /book_details/new
   def new
     @book_detail = BookDetail.new
-    @book_detail.books.build unless params[:book_detail_only]
+    @book_detail = @book_detail.books.build unless params[:book_detail_only]
   end
 
   # GET /book_details/1/edit

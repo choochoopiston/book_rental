@@ -7,9 +7,9 @@ class LendingHistoriesController < ApplicationController
   
   def index
     if params[:search].present? 
-      @lending_histories = LendingHistory.get_by_search(params[:search])
+      @lending_histories = LendingHistory.get_by_search(params[:search]).page(params[:page])
     else
-      @lending_histories = LendingHistory.all
+      @lending_histories = LendingHistory.page(params[:page])
     end
   end
   

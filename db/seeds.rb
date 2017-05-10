@@ -1,20 +1,29 @@
-User.find_or_create_by(id: 1) do |user|
-    user.id = 1,
-    user.username = "テスト管理者",
-    user.email = "choochoopiston@gmail.com",
-    user.password = "password",
-    user.password_confirmation = "password",
-    user.employee_id = 2017000,
-    user.admin = true
-end
-
-User.find_or_create_by(id: 2) do |user|
-    user.id = 1, #これ意味ない
-    user.username = "原敬之",
-    user.email = "takayukihara0805@gmail.com",
-    user.password = "password",
-    user.password_confirmation = "password",
-    user.employee_id = 2017004
+begin
+    ActiveRecord::Base.transaction do
+        User.find_or_create_by(id: 1) do |user|
+            user.id = 1,
+            user.username = "テスト管理者",
+            user.email = "choochoopiston@gmail.com",
+            user.password = "password",
+            user.password_confirmation = "password",
+            user.employee_id = 2017000,
+            user.admin = true
+        end
+        puts "ユーザID-1を登録しました。"
+        User.find_or_create_by(id: 2) do |user|
+            user.id = 1, #これ意味ない
+            user.username = "原敬之",
+            user.email = "takayukihara0805@gmail.com",
+            user.password = "password",
+            user.password_confirmation = "password",
+            user.employee_id = 2017004
+        end
+        puts "ユーザID-2を登録しました。"
+    end
+rescue => e
+      puts "初期ユーザ登録に失敗しました。"
+      Rails.logger.error e.message
+      Rails.logger.error e.backtrace.join("\n")  
 end
 
 BookDetail.find_or_create_by(id: 1) do |book_detail|
