@@ -2,7 +2,7 @@ class BookDetail < ActiveRecord::Base
   has_many :books, inverse_of: :book_detail, :dependent => :destroy
   accepts_nested_attributes_for :books
 
-  validates :isbn_code, uniqueness: true, presence: true, length: { is: 13 }
+  # validates :isbn_code, uniqueness: true, presence: true, format: { with: /\d{13}/ }
   validates :title, presence: true
   validates :writer, presence: true
   validates :publisher, presence: true

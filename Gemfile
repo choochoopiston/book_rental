@@ -30,6 +30,7 @@ gem 'whenever', require: false
 gem 'dotenv-rails'
 
 gem 'kaminari'
+gem 'seed-fu'
 # gem 'jquery-turbolinks'
 
 # Use ActiveModel has_secure_password

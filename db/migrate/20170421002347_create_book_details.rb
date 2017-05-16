@@ -1,9 +1,11 @@
 class CreateBookDetails < ActiveRecord::Migration
   def change
     create_table :book_details do |t|
+      # bigint型からstring型に変更
       t.bigint :isbn_code, null: false
       # c_codeいらないよな
-      t.integer :c_code
+      # int型からstring型に変更
+      t.string :c_code
       t.string :title, null: false
       t.string :writer, null: false
       t.string :publisher
