@@ -38,7 +38,7 @@ module BookDetailsHelper
     when "9" then
       "雑誌扱い"
     else
-      "エラー"
+      "不明/なし"
     end
   end
   
@@ -65,7 +65,7 @@ module BookDetailsHelper
     when "9" then
       "コミック"
     else
-      "エラー"
+      "不明/なし"
     end
   end
   
@@ -206,7 +206,7 @@ module BookDetailsHelper
     when "98" then
       "外国文学、その他"
     else
-      "エラー"
+      "不明/なし"
     end
   end
     

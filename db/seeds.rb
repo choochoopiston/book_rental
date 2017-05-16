@@ -13,7 +13,7 @@ begin
         BookDetail.find_or_initialize_by(id: 2) do |book_detail|
             book_detail.c_code = "C3055"
             book_detail.isbn_code = 9784884337232
-            book_detail.title = "Rails4技術者認定シルバー試験問題集2"
+            book_detail.title = "Rails4技術者認定シルバー試験問題集"
             book_detail.writer = "株式会社システムシェアード 山田裕進"
             book_detail.publisher = "インプレス"
             book_detail.content = "注目のRuby on Rails資格、唯一の公式問題集登場!これ一冊で全てOK!模擬問題2回分付き!"
