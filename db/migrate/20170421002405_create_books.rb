@@ -5,6 +5,8 @@ class CreateBooks < ActiveRecord::Migration
       t.string :code, null: false
       t.integer :place, null: false, default: 0
       t.integer :state, null: false, default: 1
+      t.date :published_date
+      t.string :edition
 
       t.timestamps null: false
     end

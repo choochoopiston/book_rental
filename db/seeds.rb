@@ -1,24 +1,33 @@
+require "csv"
+
 begin
     ActiveRecord::Base.transaction do
-        BookDetail.find_or_initialize_by(id: 1) do |book_detail|
-            book_detail.c_code = "C3055"
-            book_detail.isbn_code = 9784839950644
-            book_detail.title = "よくわかるPHPの許可書 PHP5.5対応版"
-            book_detail.writer = "たにぐちまこと"
-            book_detail.publisher = "マイナビ"
-            book_detail.content = "ノンプログラマでも安心。最強の入門書!"
-            book_detail.save!
-            puts "書籍情報ID-1を登録しました。"
+        book_detail_csv = CSV.read('db/book_detail_seeds.csv', headers: true)
+        book_detail_csv.each do |row|
+            BookDetail.find_or_initialize_by(id: row[0]) do |book_detail|
+                book_detail.isbn_code = row[1]
+                book_detail.c_code = row[2]
+                book_detail.title = row[3]
+                book_detail.writer = row[4]
+                book_detail.publisher = row[5]
+                book_detail.published_date = row[6]
+                book_detail.content = row[7]
+                book_detail.save!
+                puts "書籍#{row[0]}登録!"
+            end
         end
-        BookDetail.find_or_initialize_by(id: 2) do |book_detail|
-            book_detail.c_code = "C3055"
-            book_detail.isbn_code = 9784884337232
-            book_detail.title = "Rails4技術者認定シルバー試験問題集"
-            book_detail.writer = "株式会社システムシェアード 山田裕進"
-            book_detail.publisher = "インプレス"
-            book_detail.content = "注目のRuby on Rails資格、唯一の公式問題集登場!これ一冊で全てOK!模擬問題2回分付き!"
-            book_detail.save!
-            puts "書籍情報ID-2を登録しました。"
+        book_csv = CSV.read('db/book_seeds.csv', headers: true)
+        book_csv.each do |row|
+            Book.find_or_initialize_by(id: row[0]) do |book|
+                book.code = row[1]
+                book.book_detail_id = row[2]
+                book.place = row[3]
+                book.state = row[4]
+                book.published_date = row[5]
+                book.edition = row[6]
+                book.save!
+                puts "蔵書#{row[0]}登録!"
+            end
         end
         User.find_or_initialize_by(id: 1) do |user|
             user.username = "テスト管理者"
@@ -38,28 +47,6 @@ begin
             user.employee_id = 2017004
             user.save!
             puts "ユーザID-2を登録しました。"
-        end
-        Book.find_or_initialize_by(id: 1) do |book|
-            book.code = "TEST0001"
-            book.book_detail_id = 1
-            book.place = 0
-            book.save!
-            puts "蔵書情報ID-1を登録しました。"
-        end
-        Book.find_or_initialize_by(id: 2) do |book|
-            book.code = "TEST0002"
-            book.book_detail_id = 2
-            book.place = 0
-            book.state = 0
-            book.save!
-            puts "蔵書情報ID-2を登録しました。"
-        end
-        Book.find_or_initialize_by(id: 3) do |book|
-            book.code = "TEST0003"
-            book.book_detail_id = 2
-            book.place = 0
-            book.save!
-            puts "蔵書情報ID-3を登録しました。"        
         end
     end
 rescue => e

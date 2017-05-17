@@ -30,7 +30,7 @@ gem 'whenever', require: false
 gem 'dotenv-rails'
 
 gem 'kaminari'
-gem 'seed-fu'
+gem 'seed-fu', '~> 2.3'
 # gem 'jquery-turbolinks'
 
 # Use ActiveModel has_secure_password
@@ -41,6 +41,7 @@ gem 'seed-fu'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'bullet', group: :development
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

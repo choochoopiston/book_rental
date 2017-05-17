@@ -9,16 +9,16 @@ class BookDetailsController < ApplicationController
     if params[:simplesearch].present? 
       @search_words = params[:simplesearch].split(/[ ,　]/)
       # @book_details = BookDetail.get_by_multi_or_simplesearch(@search_words).page(params[:page])
-      @book_details = BookDetail.get_by_multi_or_simplesearch(@search_words)
+      @book_details = BookDetail.get_by_multi_or_simplesearch(@search_words).includes(:books)
     elsif params[:search1].present?
       @search_words = []
       @search_words.push(params[:search1][:word], params[:search2][:word], params[:search3][:word], params[:search4][:word])
       # @book_details = BookDetail.get_by_details(params[:search1], params[:search2], params[:search3], params[:search4]).page(params[:page])
-      @book_details = BookDetail.get_by_details(params[:search1], params[:search2], params[:search3], params[:search4])
+      @book_details = BookDetail.get_by_details(params[:search1], params[:search2], params[:search3], params[:search4]).includes(:books)
     else
       @search_words = []
       # @book_details = BookDetail.page(params[:page])
-      @book_details = BookDetail.all
+      @book_details = BookDetail.all.includes(:books)
       
 
     end

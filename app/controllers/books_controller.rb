@@ -7,9 +7,9 @@ class BooksController < ApplicationController
   # GET /books.json
   def index
     if params[:csv] == "yes"
-      @books = Book.all
+      @books = Book.all.includes(:book_detail)
     else
-      @books = Book.page(params[:page])
+      @books = Book.page(params[:page]).includes(:book_detail)
     end
     
     respond_to do |format|
@@ -62,7 +62,7 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1.json
   def update
     if params[:history] == "lend"
-      @book.state = 2
+      @book.state = 1
       @lending_history = @book.lending_histories.build
       @lending_history.user = current_user
       @lending_history.return_date = Time.now + 14.days

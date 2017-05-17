@@ -18,6 +18,11 @@ body , html {
     height: 60px;
 }
 
+.row-eq-height {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 a.btn {
     color: #fff !important;
 }

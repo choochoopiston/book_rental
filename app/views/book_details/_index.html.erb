@@ -40,7 +40,7 @@
             <td><%= link_to "#{book_detail.title}", book_detail_path(book_detail) %></td>
             <td><%= book_detail.writer %></td>
             <td id="td_publisher"><%= book_detail.publisher %></td>
-            <td><%= book_detail.content %></td>
+            <td><%= book_detail.content.truncate(40, separator: ' ') if book_detail.content.present? %></td>
           </tr>
         <% end %>
       <% end %>

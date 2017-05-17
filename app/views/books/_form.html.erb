@@ -35,12 +35,12 @@
   <div class="form-group">
     <%= f.label :state, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
-      <% if @book.state == 2 %>
+      <% if @book.state == 1 %>
         貸出中のため、変更できません。
         <%= f.hidden_field :state %><br>
       <% else %>
-        <%= f.radio_button :state, 0 %> <%= f.label :state_0, "貸出厳禁", class: "control-label" %>
-        <%= f.radio_button :state, 1 %> <%= f.label :state_1, "貸出可能", class: "control-label" %>
+        <%= f.radio_button :state, 0 %> <%= f.label :state_0, "貸出可能", class: "control-label" %>
+        <%= f.radio_button :state, 2 %> <%= f.label :state_1, "貸出厳禁", class: "control-label" %>
       <% end %>
     </div>
   </div>

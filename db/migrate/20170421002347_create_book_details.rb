@@ -10,7 +10,7 @@ class CreateBookDetails < ActiveRecord::Migration
       t.string :writer, null: false
       t.string :publisher
       # 追加したい
-      # t.date :published_date
+      t.date :published_date
       t.text :content
 
       t.timestamps null: false

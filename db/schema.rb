@@ -17,14 +17,15 @@ ActiveRecord::Schema.define(version: 20170421020349) do
   enable_extension "plpgsql"
 
   create_table "book_details", force: :cascade do |t|
-    t.integer  "isbn_code",  limit: 8, null: false
+    t.integer  "isbn_code",      limit: 8, null: false
     t.string   "c_code"
-    t.string   "title",                null: false
-    t.string   "writer",               null: false
+    t.string   "title",                    null: false
+    t.string   "writer",                   null: false
     t.string   "publisher"
+    t.date     "published_date"
     t.text     "content"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   add_index "book_details", ["title"], name: "index_book_details_on_title", unique: true, using: :btree
@@ -34,6 +35,8 @@ ActiveRecord::Schema.define(version: 20170421020349) do
     t.string   "code",                       null: false
     t.integer  "place",          default: 0, null: false
     t.integer  "state",          default: 1, null: false
+    t.date     "published_date"
+    t.string   "edition"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end

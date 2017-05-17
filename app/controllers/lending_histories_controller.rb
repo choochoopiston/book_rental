@@ -18,7 +18,7 @@ class LendingHistoriesController < ApplicationController
       begin
         ActiveRecord::Base.transaction do
           @lending_history.returned_date = Time.now
-          @lending_history.book.state = 1
+          @lending_history.book.state = 0
           @lending_history.save!
           @lending_history.book.save!
         end

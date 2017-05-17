@@ -3,7 +3,7 @@ class BookDetail < ActiveRecord::Base
   accepts_nested_attributes_for :books
 
   validates :isbn_code, uniqueness: true, presence: true, format: { with: /\d{13}/ }
-  validates :c_code, format: { with: /C\d{4}/, message: "は、Cから始まるCと数字4桁のコードを入力してください。例: C3055" }
+  validates :c_code, format: { with: /C\d{4}|不明/, message: "は、Cから始まるCと数字4桁のコードを入力してください。例: C3055" }, allow_blank: true
   validates :title, presence: true
   validates :writer, presence: true
   validates :publisher, presence: true
