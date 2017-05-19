@@ -11,7 +11,7 @@ $(function(){
     $('label[for=book_detail_books_attributes_0_code]').append("<span class=\"small text-danger\">*必須</span>");
 
 
-    var isbnCode = $("#book_isbn").text();
+    var isbnCode = $("#book_isbn a").text();
     var googleUrl ="https://www.googleapis.com/books/v1/volumes?q=" + isbnCode;
     $.ajax({
       type: "GET",

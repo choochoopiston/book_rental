@@ -15,7 +15,7 @@
     <div class="row">
       
         <div class="col-sm-3 detail_colum">図書コード</div>
-        <div id="book_isbn" class="col-sm-9 detail_content"><%= @book.book_detail.isbn_code.to_s %></div>
+        <div id="book_isbn" class="col-sm-9 detail_content"><%= link_to @book.book_detail.isbn_code, @book.book_detail %></div>
         <div class="col-sm-3 detail_colum">蔵書コード</div>
         <div class="col-sm-9 detail_content"><%= @book.code %></div>
         <div class="col-sm-3 detail_colum">書籍名</div>

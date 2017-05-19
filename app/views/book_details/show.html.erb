@@ -13,7 +13,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-2 detail_colum">図書コード</div>
-      <div class="col-sm-10 detail_content"><%= @book_detail.isbn_code.to_s %></div>
+      <div class="col-sm-10 detail_content"><%= link_to @book_detail.isbn_code, @book_detail %></div>
     </div>
     <div class="row">
       <div class="col-sm-2 detail_colum">書籍名</div>
@@ -43,10 +43,12 @@
         <div class="col-sm-10 detail_content"><%= @book_detail.published_date.to_s(:date_ja) %></div>
       </div>
     <% end %>
-    <div class="row row-eq-height">
-      <div class="col-xs-12 col-sm-2 detail_colum">詳細</div>
-      <div class="col-xs-12 col-sm-10 detail_content"><%= @book_detail.content %></div>
-    </div>
+    <% if @book_detail.content.present? %>
+      <div class="row row-eq-height">
+        <div class="col-xs-12 col-sm-2 detail_colum">詳細</div>
+        <div class="col-xs-12 col-sm-10 detail_content"><%= @book_detail.content %></div>
+      </div>
+    <% end %>
   </div>
   <h2>蔵書 
       <%= link_to '新規蔵書情報を登録', new_book_path(book_detail: @book_detail.id), class: "btn btn-success btn-xs" if current_user && current_user.admin == true %>

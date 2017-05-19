@@ -7,9 +7,9 @@ class BooksController < ApplicationController
   # GET /books.json
   def index
     if params[:csv] == "yes"
-      @books = Book.all.includes(:book_detail)
+      @books = Book.all.includes(:book_detail).order(:id)
     else
-      @books = Book.page(params[:page]).includes(:book_detail)
+      @books = Book.page(params[:page]).includes(:book_detail).order(:id)
     end
     
     respond_to do |format|
