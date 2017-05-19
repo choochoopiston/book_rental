@@ -20,14 +20,14 @@
       <div class="col-sm-10 detail_content"><%= @book_detail.title %></div>
     </div>
     <div class="row">
-      <div class="col-xs-4 col-sm-2 detail_colum">分類コード</div>
-      <div class="col-xs-8 col-sm-1 detail_content"><%= @book_detail.c_code %></div>
-      <div class="col-xs-4 col-sm-1 detail_subcolum">対象</div>
-      <div class="col-xs-8 col-sm-2 detail_content"><%= sale_for(@book_detail.c_code.to_s.slice(1)) %></div>
-      <div class="col-xs-4 col-sm-1 detail_subcolum">形態</div>
-      <div class="col-xs-8 col-sm-2 detail_content"><%= published_in(@book_detail.c_code.to_s.slice(2)) %></div>
-      <div class="col-xs-4 col-sm-1 detail_subcolum">内容</div>
-      <div class="col-xs-8 col-sm-2 detail_content"><%= content_for(@book_detail.c_code.to_s.slice(3,2)) %></div>
+      <div class="col-xs-6 col-sm-2 detail_colum">分類コード</div>
+      <div class="col-xs-6 col-sm-1 detail_content"><%= @book_detail.c_code %></div>
+      <div class="col-xs-6 col-sm-1 detail_subcolum">対象</div>
+      <div class="col-xs-6 col-sm-2 detail_content"><%= sale_for(@book_detail.c_code.to_s.slice(1)) %></div>
+      <div class="col-xs-6 col-sm-1 detail_subcolum">形態</div>
+      <div class="col-xs-6 col-sm-2 detail_content"><%= published_in(@book_detail.c_code.to_s.slice(2)) %></div>
+      <div class="col-xs-6 col-sm-1 detail_subcolum">内容</div>
+      <div class="col-xs-6 col-sm-2 detail_content"><%= content_for(@book_detail.c_code.to_s.slice(3,2)) %></div>
     </div>
     <div class="row">
       <div class="col-sm-2 detail_colum">著者</div>
