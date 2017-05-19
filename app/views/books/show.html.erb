@@ -11,41 +11,51 @@
   </h2>
   <!--<%= link_to 'Back', books_path %>-->
   <div class="container-fluid">
+    
     <div class="row">
-      <div class="col-sm-3 detail_colum">蔵書コード</div>
-      <div class="col-sm-9 detail_content"><%= @book.code %></div>
-      <div class="col-sm-3 detail_colum">書籍名</div>
-      <div class="col-sm-9 detail_content"><%= link_to "#{@book.book_detail.title}", book_detail_path(@book.book_detail.id) %></div>
-      <div class="col-sm-3 detail_colum">著者</div>
-      <div class="col-sm-9 detail_content"><%= @book.book_detail.writer %></div>
-      <div class="col-sm-3 detail_colum">出版社</div>
-      <div class="col-sm-9 detail_content"><%= @book.book_detail.publisher %></div>
-      <% if @book.published_date.present? || @book.edition.present? %>
-        <div class="col-sm-3 detail_colum">発行日/版</div>
-        <div class="col-sm-9 detail_content">
-          <%= @book.published_date.to_s(:date_ja) if @book.published_date.present? %>
-          <%= @book.edition if @book.edition.present? %>
-        </div>
-      <% end %>
-      <% if @book.lending_histories.where(returned_date: nil).present? %>
-        <div class="col-sm-3 detail_colum">現在借りてる人</div>
-        <div class="col-sm-9 detail_content">
-          <%= @book.lending_histories.where(returned_date: nil).first.user.username %>
-        </div>
-      <% end %>
+      
+        <div class="col-sm-3 detail_colum">図書コード</div>
+        <div id="book_isbn" class="col-sm-9 detail_content"><%= @book.book_detail.isbn_code %></div>
+        <div class="col-sm-3 detail_colum">蔵書コード</div>
+        <div class="col-sm-9 detail_content"><%= @book.code %></div>
+        <div class="col-sm-3 detail_colum">書籍名</div>
+        <div id="book_title" class="col-sm-9 detail_content"><%= link_to "#{@book.book_detail.title}", book_detail_path(@book.book_detail.id) %></div>
+        <div class="col-sm-3 detail_colum">著者</div>
+        <div class="col-sm-9 detail_content"><%= @book.book_detail.writer %></div>
+        <div class="col-sm-3 detail_colum">出版社</div>
+        <div class="col-sm-9 detail_content"><%= @book.book_detail.publisher %></div>
+        <% if @book.published_date.present? || @book.edition.present? %>
+          <div class="col-sm-3 detail_colum">発行日/版</div>
+          <div class="col-sm-9 detail_content">
+            <%= @book.published_date.to_s(:date_ja) if @book.published_date.present? %>
+            <%= @book.edition if @book.edition.present? %>
+          </div>
+        <% end %>
+        <% if @book.lending_histories.where(returned_date: nil).present? %>
+          <div class="col-sm-3 detail_colum">現在借りてる人</div>
+          <div class="col-sm-9 detail_content">
+            <%= @book.lending_histories.where(returned_date: nil).first.user.username %>
+          </div>
+        <% end %>
+
     </div>
   </div>
   <br />
-  <div class="text-center">
-    <% if @book.state == 0 %>
-      <%= link_to "この本を借りる", book_path(@book, history: "lend"), method: :put, class: "btn btn-primary btn-lg", data: {confirm: "本の貸出期間は2週間です。"} %>
-    <% elsif @book.state == 1 %>
-      <!--<%= link_to "この本を返す", book_path(@book, history: "return"), method: :put %>-->
-      <%= link_to "この本を返す", lending_history_path(@book.lending_histories.where(returned_date: nil).first.id, history: "return"), method: :put, class: "btn btn-danger btn-lg", data: {confirm: "本当に本をちゃんと元の場所に返しましたか？"} %>
-      <%= link_to "返却期間を延長", lending_history_path(@book.lending_histories.where(returned_date: nil).first.id), method: :put, class: "btn btn-warning btn-lg", data: {confirm: "返却期間は貸出日より最大60日まで
-      延長できます。"} %>
-    <% else %>
-      この本は持ち出し厳禁です。
-    <% end %>
+  <div class="row">
+      <div class="text-center">
+        
+        <% if @book.state == 0 %>
+          <%= link_to "この本を借りる", book_path(@book, history: "lend"), method: :put, class: "btn btn-primary btn-lg", data: {confirm: "本の貸出期間は2週間です。"} %>
+        <% elsif @book.state == 1 %>
+          <!--<%= link_to "この本を返す", book_path(@book, history: "return"), method: :put %>-->
+          <%= link_to "この本を返す", lending_history_path(@book.lending_histories.where(returned_date: nil).first.id, history: "return"), method: :put, class: "btn btn-danger btn-lg", data: {confirm: "本当に本をちゃんと元の場所に返しましたか？"} %>
+          <%= link_to "返却期間を延長", lending_history_path(@book.lending_histories.where(returned_date: nil).first.id), method: :put, class: "btn btn-warning btn-lg", data: {confirm: "返却期間は貸出日より最大60日まで
+          延長できます。"} %>
+        <% else %>
+          この本は持ち出し厳禁です。
+        <% end %>
+        <br /><br />
+        <div id="book_img"></div>
+      </div>
   </div>
 </div>
