@@ -156,7 +156,8 @@ class BookDetail < ActiveRecord::Base
     CSV.foreach(file.path, headers: true) do |row|
       # IDが見つかれば、レコードを呼び出し、見つかれなければ、新しく作成
       # book_detail = find_by(id: row["id"]) || new
-      book_detail = find_or_create_by(id: row["id"]) || new
+      # book_detail = find_or_create_by(id: row["id"]) || new
+      book_detail = new
       # CSVからデータを取得し、設定する
       book_detail.attributes = row.to_hash.slice(*updatable_attributes)
       # 保存する
@@ -167,7 +168,7 @@ class BookDetail < ActiveRecord::Base
   # CSV一括登録用
   # 更新を許可するカラムを定義
   def self.updatable_attributes
-    ["isbn_code", "c_code", "title", "writer", "publisher", "content"]
+    ["isbn_code", "c_code", "title", "writer", "publisher", "content", "published_date"]
   end
   
   

@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20170421020349) do
     t.integer  "book_detail_id"
     t.string   "code",                       null: false
     t.integer  "place",          default: 0, null: false
-    t.integer  "state",          default: 1, null: false
+    t.integer  "state",          default: 0, null: false
     t.date     "published_date"
     t.string   "edition"
     t.datetime "created_at",                 null: false

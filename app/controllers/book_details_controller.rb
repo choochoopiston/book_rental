@@ -8,17 +8,20 @@ class BookDetailsController < ApplicationController
   def index
     if params[:simplesearch].present? 
       @search_words = params[:simplesearch].split(/[ ,　]/)
-      # @book_details = BookDetail.get_by_multi_or_simplesearch(@search_words).page(params[:page])
-      @book_details = BookDetail.get_by_multi_or_simplesearch(@search_words).includes(:books)
+      if params[:type_search] == "and_search"
+        @book_details = BookDetail.get_by_multi_and_simplesearch(@search_words).includes(:books).order(:id)
+      else
+        @book_details = BookDetail.get_by_multi_or_simplesearch(@search_words).includes(:books).order(:id)
+      end
     elsif params[:search1].present?
       @search_words = []
       @search_words.push(params[:search1][:word], params[:search2][:word], params[:search3][:word], params[:search4][:word])
       # @book_details = BookDetail.get_by_details(params[:search1], params[:search2], params[:search3], params[:search4]).page(params[:page])
-      @book_details = BookDetail.get_by_details(params[:search1], params[:search2], params[:search3], params[:search4]).includes(:books)
+      @book_details = BookDetail.get_by_details(params[:search1], params[:search2], params[:search3], params[:search4]).includes(:books).order(:id)
     else
       @search_words = []
       # @book_details = BookDetail.page(params[:page])
-      @book_details = BookDetail.all.includes(:books)
+      @book_details = BookDetail.all.includes(:books).order(:id)
       
 
     end
@@ -42,7 +45,7 @@ class BookDetailsController < ApplicationController
   # GET /book_details/new
   def new
     @book_detail = BookDetail.new
-    @book_detail = @book_detail.books.build unless params[:book_detail_only]
+    @book_detail.books.build unless params[:book_detail_only]
   end
 
   # GET /book_details/1/edit
@@ -119,12 +122,9 @@ class BookDetailsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def book_detail_params
-      params.require(:book_detail).permit(:isbn_code, :c_code, :title, :writer, :publisher, :content, books_attributes: [:id, :code, :place, :state])
-    end
     
     def book_detail_params
-      params.require(:book_detail).permit(:isbn_code, :c_code, :title, :writer, :publisher, :content, books_attributes: [:id, :code, :place, :state])
+      params.require(:book_detail).permit(:isbn_code, :c_code, :title, :writer, :publisher, :content, :published_date, books_attributes: [:id, :code, :place, :state, :published_date, :edition])
     end
     
     def check_admin

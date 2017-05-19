@@ -23,8 +23,25 @@
     <%= f.label :code, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
       <%= f.text_field :code, class: "form-control" %>
+      <p class="help-block">※ちなみに、今現在もっとも大きいコードは、<%= Book.maximum("code") %>です。</p>
     </div>
   </div>
+
+  <div class="form-group">
+    <%= f.label :published_date, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.date_field :published_date, class: "form-control" %>
+      <p class="help-block">※年月日が部分的にしかわからない場合は、1月や1日にしてください。</p>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :edition, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.text_field :edition, class: "form-control", placeholder: "○版○刷など。" %>
+    </div>
+  </div>
+      
   <div class="form-group">
     <%= f.label :place, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">

@@ -21,7 +21,7 @@
               <td><%= link_to "#{book.book_detail.title}", book_detail_path(book.book_detail) %></td>
               <td><%= book.book_detail.writer %></td>
               <td id="td_publisher"><%= book.book_detail.publisher %></td>
-              <td><%= book.book_detail.content %></td>
+              <td><%= book.book_detail.content.truncate(40, separator: ' ') if book.book_detail.content.present? %></td>
             </tr>
           <% end %>
         <% elsif book_detail.books.count == 0 %>
@@ -31,7 +31,7 @@
             <td><%= link_to "#{book_detail.title}", book_detail_path(book_detail) %></td>
             <td><%= book_detail.writer %></td>
             <td id="td_publisher"><%= book_detail.publisher %></td>
-            <td><%= book_detail.content %></td>
+            <td><%= book_detail.content.truncate(40, separator: ' ') if book_detail.content.present? %></td>
           </tr>
         <% else %>
           <tr>

@@ -7,7 +7,7 @@
   <% if @search_words.present? %>
     <% sentence = '' %>
     <% @search_words.each do |search_word| %>
-      <% sentence += " & " if sentence.present? %>
+      <% sentence += and_or_symbol(params[:type_search]) if sentence.present? %>
       <% sentence += "'#{search_word}'" %>
     <% end %>
     <p>
@@ -20,9 +20,10 @@
       <div class="row">
         <%= form_tag(book_details_path, method: "get", class: "form-inline") do %>
           <%= text_field_tag :simplesearch, params[:simplesearch], class: "form-control" %>
+          <%= select_tag :type_search, options_for_select([["AND検索", "and_search"], ["OR検索", "or_search"]]) %>
           <%= submit_tag("簡易検索", class: "btn btn-success") %>
         <% end %>
-        ※書籍名、作者名、出版社名、詳細内容の一部で検索可能です。(複数キーワードOK→OR検索になります。)
+        ※書籍名、作者名、出版社名、詳細内容の一部で検索可能です。(複数キーワードOK)
       </div>
     </div>
   <% else %>
@@ -33,6 +34,7 @@
       <div class="row">
         <%= form_tag(book_details_path, method: "get", class: "form-inline") do %>
           <%= text_field_tag :simplesearch, params[:simplesearch], class: "form-control" %>
+          <%= select_tag :type_search, options_for_select([["AND検索", "and_search"], ["OR検索", "or_search"]]) %>
           <%= submit_tag("簡易検索", class: "btn btn-success") %>
         <% end %>
         ※書籍名、作者名、出版社名、詳細内容の一部で検索可能です。(複数キーワードOK)
@@ -57,5 +59,7 @@
   <div>
     <%= render partial: 'book_details/index', locals: { book_details: @book_details } %>
   </div>
+  
+  <div id="back-to-top" style="position:fixed;right:15px;bottom:15px;z-index:2"><a href="#"><i class="fa fa-hand-o-up fa-4x" aria-hidden="true"></i></a></div>
   
 </div>

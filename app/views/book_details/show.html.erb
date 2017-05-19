@@ -37,6 +37,12 @@
       <div class="col-sm-2 detail_colum">出版社</div>
       <div class="col-sm-10 detail_content"><%= @book_detail.publisher %></div>
     </div>
+    <% if @book_detail.published_date.present? %>
+      <div class="row">
+        <div class="col-sm-2 detail_colum">初版発行</div>
+        <div class="col-sm-10 detail_content"><%= @book_detail.published_date.to_s(:date_ja) %></div>
+      </div>
+    <% end %>
     <div class="row row-eq-height">
       <div class="col-xs-12 col-sm-2 detail_colum">詳細</div>
       <div class="col-xs-12 col-sm-10 detail_content"><%= @book_detail.content %></div>
@@ -53,6 +59,7 @@
           <th>No.</th>
           <th>配架場所</th>
           <th>蔵書コード</th>
+          <th colspan="2">エディション</th>
           <th>貸出状況</th>
           <th>返却予定日</th>
         </tr>
@@ -64,6 +71,8 @@
             <td><%= index + 1 %></td>
             <td><%= place_if(book.place) %></td>
             <td><%= link_to "#{book.code}", book_path(book) %></td>
+            <td><%= book.published_date.to_s(:date_ja) if book.published_date.present? %></td>
+            <td><%= book.edition %></td>
             <td><%= state_if(book.state) %></td>
             <td><%= book.lending_histories.where(returned_date: nil).first.return_date.to_s(:date) if book.state == 1 %></td>
           </tr>

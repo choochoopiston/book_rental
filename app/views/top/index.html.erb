@@ -3,9 +3,10 @@
   <div class="container-fluid">
     <%= form_tag(book_details_path, method: "get", class: "form-inline") do %>
       <%= text_field_tag :simplesearch, params[:simplesearch], class: "form-control" %>
+      <%= select_tag :type_search, options_for_select([["AND検索", "and_search"], ["OR検索", "or_search"]]) %>
       <%= submit_tag("簡易検索", class: "btn btn-success") %>
     <% end %>
-    ※書籍名、作者名、出版社名、詳細内容の一部で検索可能です。(複数キーワードOK→OR検索になります。)
+    ※書籍名、作者名、出版社名、詳細内容の一部で検索可能です。(複数キーワードOK)
   </div>
   <h2 class="heading">詳細検索</h2>
   <div class="container-fluid">

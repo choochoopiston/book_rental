@@ -1,5 +1,7 @@
 Time::DATE_FORMATS[:default] = '%Y/%m/%d %H:%M'
 Time::DATE_FORMATS[:datetime] = '%Y/%m/%d %H:%M'
 Time::DATE_FORMATS[:date] = '%y/%m/%d'
+Time::DATE_FORMATS[:date_ja] = '%y年%m月%d日'
 Time::DATE_FORMATS[:time] = '%H:%M:%S'
 Date::DATE_FORMATS[:default] = '%Y/%m/%d'
+Date::DATE_FORMATS[:date_ja] = '%Y年%m月%d日'

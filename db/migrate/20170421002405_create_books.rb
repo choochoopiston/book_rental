@@ -4,7 +4,7 @@ class CreateBooks < ActiveRecord::Migration
       t.references :book_detail, index: true, foreign_key: true
       t.string :code, null: false
       t.integer :place, null: false, default: 0
-      t.integer :state, null: false, default: 1
+      t.integer :state, null: false, default: 0
       t.date :published_date
       t.string :edition
 

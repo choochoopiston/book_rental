@@ -202,4 +202,12 @@ module BookDetailsHelper
     books.count
   end
   
+  def and_or_symbol(type_search)
+    if type_search == "or_search"
+      " or "
+    else
+      " & "
+    end
+  end
+  
 end

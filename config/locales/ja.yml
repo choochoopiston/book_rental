@@ -20,6 +20,8 @@ ja:
         code: 蔵書コード
         place: 配架場所
         state: 貸出状況
+        published_date: 発行日
+        edition : 発行版
       book_detail:
         isbn_code: 図書コード(ISBNコード:ハイフンなし13桁)
         c_code: 分類Cコード(C+数字4桁)
@@ -27,9 +29,7 @@ ja:
         writer: 著者
         publisher: 出版社
         content: 詳細内容
-      books:
-        code: 蔵書コード
-        book_detail: なにこれ？
+        published_date: 初版発行日
         
   date:
     abbr_day_names:

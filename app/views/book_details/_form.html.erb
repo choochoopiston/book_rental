@@ -20,13 +20,13 @@
       <span id="gb_api" class="btn btn-primary btn-xs">GoogleBooksAPI自動入力</span>
       <!--<span id="ndl_api" class="btn btn-info btn-xs">国立国会図書館API自動入力</span>-->
       <!--<input type="button" value="APIが動かない場合、ページを再読込してください" onclick="location.reload();", class="btn btn-warning btn-xs" />-->
-      <div id="message"></div>
+      <div id="message"><p class="help-block">※番号が合っていても、GoogleBooksにデータが存在しない場合が多々あります。</p></div>
     </div>
   </div>
   <div class="form-group">
     <%= f.label :c_code, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
-      <%= f.text_field :c_code, class: "form-control", placeholder: "C0000" %>
+      <%= f.text_field :c_code, class: "form-control", placeholder: "C0000: わからない場合は、不明と入力ください。" %>
     </div>
   </div>
   <div class="form-group">
@@ -38,13 +38,20 @@
   <div class="form-group">
     <%= f.label :writer, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
-      <%= f.text_field :writer, class: "form-control" %>
+      <%= f.text_field :writer, class: "form-control", placeholder: "わからない場合は、不明と入力ください。" %>
     </div>
   </div>
   <div class="form-group">
     <%= f.label :publisher, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
       <%= f.text_field :publisher, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :published_date, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.date_field :published_date, class: "form-control" %>
+      <p class="help-block">※年月日が部分的にしかわからない場合は、1月や1日にしてください。</p>
     </div>
   </div>
   <div class="form-group">
@@ -68,6 +75,22 @@
       <%= b.label :code, "蔵書コード", class: "col-sm-3 control-label" %>
       <div class="col-sm-8">
         <%= b.text_field :code, class: "form-control" %>
+        <p class="help-block">※ちなみに、今現在もっとも大きいコードは、<%= Book.maximum("code") %>です。新規の場合は、この次の番号を降ってください。</p>
+      </div>
+      </div>
+      
+      <div class="form-group">
+      <%= b.label :published_date, "発行日", class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= b.date_field :published_date, class: "form-control" %>
+        <p class="help-block">※年月日が部分的にしかわからない場合は、1月や1日にしてください。</p>
+      </div>
+      </div>
+      
+      <div class="form-group">
+      <%= b.label :edition, "発行版", class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= b.text_field :edition, class: "form-control", placeholder: "○版○刷など。" %>
       </div>
       </div>
   

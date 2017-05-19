@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6, maximum: 8 }
   validates :password, confirmation: true
   validates :password_confirmation, presence: true
-  validates :employee_id, uniqueness: true, presence: true
+  validates :employee_id, uniqueness: true, presence: true, format: { with: /\d{7}/ }
   validates :username, presence: true
   
   has_many :lending_histories, :dependent => :destroy
@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       # IDが見つかれば、レコードを呼び出し、見つかれなければ、新しく作成
-      user = find_by(id: row["id"]) || new
+      # user = find_by(id: row["id"]) || new
+      user = new
       # CSVからデータを取得し、設定する
       user.attributes = row.to_hash.slice(*updatable_attributes)
       # 保存する

@@ -277,4 +277,23 @@ $(function(){
         $(this.form).find("textarea, :text, select").val("").end().find(":checked").prop("checked", false);
     });
     
+    
+    //#back-to-topを消す
+    $('#back-to-top').hide();
+    //スクロールが十分にされた#back-to-topを表示、スクロールが戻ったら非表示
+    $(window).scroll(function(){
+        if($(this).scrollTop() > 60) {
+            $('#back-to-top').fadeIn();
+        }else{
+            $('#back-to-top').fadeOut();
+        }
+    });
+    //#back-to-topがクリックされたら上に戻る
+    $('#back-to-top a').click(function(){
+        $('body').animate({
+            scrollTop: 0
+        }, 500);
+        //処理が終わったら、falseを返す？ → a要素のデフォルト機能を止める
+        return false;
+    });
 });

@@ -20,6 +20,13 @@
       <div class="col-sm-9 detail_content"><%= @book.book_detail.writer %></div>
       <div class="col-sm-3 detail_colum">出版社</div>
       <div class="col-sm-9 detail_content"><%= @book.book_detail.publisher %></div>
+      <% if @book.published_date.present? || @book.edition.present? %>
+        <div class="col-sm-3 detail_colum">発行日/版</div>
+        <div class="col-sm-9 detail_content">
+          <%= @book.published_date.to_s(:date_ja) if @book.published_date.present? %>
+          <%= @book.edition if @book.edition.present? %>
+        </div>
+      <% end %>
       <% if @book.lending_histories.where(returned_date: nil).present? %>
         <div class="col-sm-3 detail_colum">現在借りてる人</div>
         <div class="col-sm-9 detail_content">
