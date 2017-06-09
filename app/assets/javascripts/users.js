@@ -4,4 +4,21 @@ $(function(){
     $('label[for=user_password_confirmation]').append("<span class=\"small text-danger\">*必須</span>");
     $('label[for=user_employee_id]').append("<span class=\"small text-danger\">*必須</span>");
     $('label[for=user_username]').append("<span class=\"small text-danger\">*必須</span>");
+
+    var API_KEY = "AIzaSyDkfydjPS0gK5H1Gdb4_NBqiOOVgtM1iOc";
+    var CUSTOM_SEARCH_ENGINE = "000522045660425340154:88fbfnztrg8";
+    var word = $("#book_title a").text();
+    console.log(word);
+    var customUrl = "https://www.googleapis.com/customsearch/v1?key=" + API_KEY + "&cx=" + CUSTOM_SEARCH_ENGINE + "&q=" + word + "&searchType=image"
+    $.ajax({
+      type: "GET",
+      url: customUrl,
+      dataType: "json"
+      }).done(function(json){
+         console.log(json.items[0].link);
+         console.log(json.items[0].image.contextLink);
+         console.log(json.items[0].image.thumbnailLink);
+      });
+    
+    
 });

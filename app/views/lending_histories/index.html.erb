@@ -71,7 +71,7 @@
               <td><%= link_to lending_history.book.code, lending_history.book %></td>
               <td><%= link_to lending_history.book.book_detail.title, lending_history.book.book_detail %></td>
               <td><%= lending_history.user.employee_id %></td>
-              <td><%= lending_history.user.username %></td>
+              <td><%= link_to lending_history.user.username, lending_history.user %></td>
               <td><%= lending_history.return_date %></td>
               <td><%= lending_history.lending_situation %></td>
             </tr>

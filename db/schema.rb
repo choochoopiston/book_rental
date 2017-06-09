@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20170421020349) do
     t.integer  "isbn_code",      limit: 8, null: false
     t.string   "c_code"
     t.string   "title",                    null: false
-    t.string   "writer",                   null: false
+    t.string   "writer"
     t.string   "publisher"
     t.date     "published_date"
     t.text     "content"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20170421020349) do
     t.datetime "updated_at",               null: false
   end
 
-  add_index "book_details", ["title"], name: "index_book_details_on_title", unique: true, using: :btree
+  add_index "book_details", ["isbn_code"], name: "index_book_details_on_isbn_code", unique: true, using: :btree
 
   create_table "books", force: :cascade do |t|
     t.integer  "book_detail_id"

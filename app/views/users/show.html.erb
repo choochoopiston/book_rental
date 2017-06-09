@@ -18,7 +18,7 @@
     </thead>
   
     <tbody>
-      <% @user.lending_histories.each do |lh| %>
+      <% @user.lending_histories.includes(:book).each do |lh| %>
         <% book_detail = BookDetail.find(lh.book.book_detail_id) %>
         <tr>
           <td><%= link_to "#{lh.book.code}", book_path(lh.book.id) %></td>

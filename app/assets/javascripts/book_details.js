@@ -176,11 +176,11 @@ $(function(){
       $.getJSON(url, function(data) {
         if(!data.totalItems) {
           $("#book_detail_isbn_code").val(isbn);
-          $("#book_detail_c_code").val("");
-          $("#book_detail_title").val("");
-          $("#book_detail_writer").val("");
-          $("#book_detail_publisher").val("");
-          $("#book_detail_content").val("");
+          // $("#book_detail_c_code").val("");
+          // $("#book_detail_title").val("");
+          // $("#book_detail_writer").val("");
+          // $("#book_detail_publisher").val("");
+          // $("#book_detail_content").val("");
 
           $("#message").html('<p class="bg-warning" id="warning">該当する書籍がありません。</p>');
           $('#message > p').fadeOut(3000);
@@ -191,7 +191,9 @@ $(function(){
           $("#book_detail_isbn_code").val(isbn);
           $("#book_detail_title").val(data.items[0].volumeInfo.title);
           $("#book_detail_writer").val(data.items[0].volumeInfo.authors);
-          $("#book_detail_publisher").val(data.items[0].volumeInfo.publisher);
+          if(data.items[0].volumeInfo.publisher) {
+            $("#book_detail_publisher").val(data.items[0].volumeInfo.publisher);
+          }
           $("#book_detail_content").val(data.items[0].volumeInfo.description);
         }
 
