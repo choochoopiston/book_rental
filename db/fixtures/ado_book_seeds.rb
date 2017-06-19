@@ -50,25 +50,44 @@ begin
                 puts "蔵書#{row[0]}登録!"
             end
         end
-        User.seed_once(:id) do |user|
-            user.id = 1
+        User.find_or_initialize_by(employee_id: 2017000) do |user|
             user.username = "テスト管理者"
             user.email = "choochoopiston@gmail.com"
             user.password = "password"
             user.password_confirmation = "password"
             user.employee_id = 2017000
             user.admin = true
+            user.save!
             puts "ユーザID-1を登録しました。"
         end
-        User.seed_once(:id) do |user|
-            user.id = 2
+        User.find_or_initialize_by(employee_id: 2017004) do |user|
             user.username = "原敬之"
             user.email = "takayukihara0805@gmail.com"
             user.password = "password"
             user.password_confirmation = "password"
             user.employee_id = 2017004
+            user.save!
             puts "ユーザID-2を登録しました。"
         end
+        # User.seed_once(:id) do |user|
+        #     user.id = 1
+        #     user.username = "テスト管理者"
+        #     user.email = "choochoopiston@gmail.com"
+        #     user.password = "password"
+        #     user.password_confirmation = "password"
+        #     user.employee_id = 2017000
+        #     user.admin = true
+        #     puts "ユーザID-1を登録しました。"
+        # end
+        # User.seed_once(:id) do |user|
+        #     user.id = 2
+        #     user.username = "原敬之"
+        #     user.email = "takayukihara0805@gmail.com"
+        #     user.password = "password"
+        #     user.password_confirmation = "password"
+        #     user.employee_id = 2017004
+        #     puts "ユーザID-2を登録しました。"
+        # end
     end
 rescue => e
       puts "初期データ登録に失敗しました。#{e.message}"

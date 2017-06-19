@@ -31,6 +31,7 @@ gem 'dotenv-rails'
 
 gem 'kaminari'
 gem 'seed-fu', '~> 2.3'
+gem 'passenger'
 # gem 'jquery-turbolinks'
 
 # Use ActiveModel has_secure_password
