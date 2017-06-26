@@ -66,7 +66,7 @@
         <% if @lending_histories.present? %>
           <% @lending_histories.order("created_at DESC").each_with_index do |lending_history, index| %>
             <tr>
-              <td><%= index + 1 %></td>
+              <td><%= lending_history.id %></td>
               <td><%= lending_history.created_at.to_s(:date) %></td>
               <td><%= link_to lending_history.book.code, lending_history.book %></td>
               <td><%= link_to lending_history.book.book_detail.title, lending_history.book.book_detail %></td>

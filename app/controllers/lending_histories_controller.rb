@@ -21,8 +21,8 @@ class LendingHistoriesController < ApplicationController
           @lending_history.book.state = 0
           @lending_history.save!
           @lending_history.book.save!
+          UserMailer.returned_book(@lending_history).deliver
         end
-        UserMailer.returned_book(@lending_history).deliver
         redirect_to @lending_history.book, notice: '本を返却しました。'
       rescue => e
         redirect_to @lending_history.book, notice: '本を返却できませんでした。'
@@ -44,14 +44,15 @@ class LendingHistoriesController < ApplicationController
   
   def send_email
     @after_deadlines = LendingHistory.where(returned_date: nil).where("return_date < ? ", Time.now )
-    @after_deadlines.each do |after_deadline|
+    UserMailer.need_to_return(@after_deadlines).deliver
+    #@after_deadlines.each do |after_deadline|
       # @return_date = after_deadline.return_date
       # @title = after_deadline.book.book_detail.title
       # @email = after_deadline.user.email
       # @name = after_deadline.user.username
       # UserMailer.need_to_return(@email, @name).deliver
-      UserMailer.need_to_return(after_deadline).deliver
-    end
+      #UserMailer.need_to_return(after_deadline).deliver
+    #end
     redirect_to root_path
   end
   
@@ -59,14 +60,15 @@ class LendingHistoriesController < ApplicationController
     after_2days = Time.now + 2.day
     after_3days = Time.now + 3.day
     @three_days = LendingHistory.where(returned_date: nil).where("return_date > ? ", after_2days).where("return_date < ?", after_3days)
-    @three_days.each do |three_day|
+    UserMailer.three_to_deadline(@three_days).deliver
+    #@three_days.each do |three_day|
       # @return_date = three_day.return_date
       # @title = three_day.book.book_detail.title
       # @email = three_day.user.email
       # @name = three_day.user.username
       # UserMailer.three_to_deadline(@email, @name).deliver
-      UserMailer.three_to_deadline(three_day).deliver
-    end
+      #UserMailer.three_to_deadline(three_day).deliver
+    #end
     redirect_to root_path
   end
   

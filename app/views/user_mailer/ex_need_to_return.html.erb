@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1><%= @name %>殿</h1>
+      <p>
+      先日、<%= @lended_date.to_s(:date) %>に会社よりレンタルした書籍「<%= @title %>」の<br />
+      返却期日が<%= @return_date.to_s(:date) %>となっており、期日過ぎております。<br />
+      <%= link_to "即刻返却手続きをするか、可能な場合のみですが、延長申請をしてください。", url_for([@book, only_path: false]) %>
+    </p>
+    <p>
+      株式会社アド 書籍レンタル事務局より。
+      Email: <%= mail_to "ado-edu@ado-tech.co.jp", "ado-edu@ado-tech.co.jp", :encode => 'hex' %>
+    </p>
+  </body>
+</html>

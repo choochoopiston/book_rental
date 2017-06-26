@@ -4,14 +4,11 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>管理者さま</h1>
+    <h1><%= @name %>殿</h1>
       <p>
-      <p>本日現時点で、レンタル書籍の返却期限が過ぎてる方は、以下の通りです。</p>
-      <ol>
-        <% @lending_histories.each do |lh| %>
-          <li><%= lh.user.username %></li>
-        <% end %>
-      </ol>
+      先日、<%= @lended_date.to_s(:date) %>に会社よりレンタルした書籍「<%= @title %>」の<br />
+      返却期日が<%= @return_date.to_s(:date) %>となっております。<br />
+      返却期日を守るよう、ご協力何卒よろしくお願いいたします。
     </p>
     <p>
       株式会社アド 書籍レンタル事務局より。

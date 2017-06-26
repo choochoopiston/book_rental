@@ -23,8 +23,8 @@
 set :output, 'log/crontab.log'
 # ジョブ実行環境を指定
 set :environment, :production
-
-every 5.minute do
+# 日本時間で指定してOK
+every 1.day, :at => '9:00 am' do
   rake 'send_check_email'
 end
 

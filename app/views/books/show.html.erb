@@ -44,9 +44,9 @@
   <div class="row">
       <div class="text-center">
         
-        <% if @book.state == 0 %>
+        <% if @book.lending_histories.where(returned_date: nil).blank? %>
           <%= link_to "この本を借りる", book_path(@book, history: "lend"), method: :put, class: "btn btn-primary btn-lg", data: {confirm: "本の貸出期間は2週間です。"} %>
-        <% elsif @book.state == 1 %>
+        <% elsif @book.lending_histories.where(returned_date: nil).present? %>
           <!--<%= link_to "この本を返す", book_path(@book, history: "return"), method: :put %>-->
           <%= link_to "この本を返す", lending_history_path(@book.lending_histories.where(returned_date: nil).first.id, history: "return"), method: :put, class: "btn btn-danger btn-lg", data: {confirm: "本当に本をちゃんと元の場所に返しましたか？"} %>
           <%= link_to "返却期間を延長", lending_history_path(@book.lending_histories.where(returned_date: nil).first.id), method: :put, class: "btn btn-warning btn-lg", data: {confirm: "返却期間は貸出日より最大60日まで

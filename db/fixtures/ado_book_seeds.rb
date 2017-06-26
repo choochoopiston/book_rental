@@ -52,23 +52,26 @@ begin
         end
         User.find_or_initialize_by(employee_id: 2017000) do |user|
             user.username = "テスト管理者"
+            user.username = "てすとかんりしゃ"
             user.email = "choochoopiston@gmail.com"
             user.password = "password"
+            #初期データ投入したらすぐにパスワード変更すること。
             user.password_confirmation = "password"
+            user.password_confirmation = "パスワード"
             user.employee_id = 2017000
             user.admin = true
             user.save!
             puts "ユーザID-1を登録しました。"
         end
-        User.find_or_initialize_by(employee_id: 2017004) do |user|
-            user.username = "原敬之"
-            user.email = "takayukihara0805@gmail.com"
-            user.password = "password"
-            user.password_confirmation = "password"
-            user.employee_id = 2017004
-            user.save!
-            puts "ユーザID-2を登録しました。"
-        end
+        # User.find_or_initialize_by(employee_id: 2017004) do |user|
+        #     user.username = "原敬之"
+        #     user.email = "takayukihara0805@gmail.com"
+        #     user.password = "password"
+        #     user.password_confirmation = "password"
+        #     user.employee_id = 2017004
+        #     user.save!
+        #     puts "ユーザID-2を登録しました。"
+        # end
         # User.seed_once(:id) do |user|
         #     user.id = 1
         #     user.username = "テスト管理者"
