@@ -7,7 +7,8 @@ class SorceryCore < ActiveRecord::Migration
       t.string :employee_id, null: false
       t.string :password_yomi, null: false
       t.string :username, null: false
-      t.string :username_yomi, null: false
+      t.string :username_yomi, null: false 
+      t.string :belonging, null: false 
       
       t.boolean :admin, null: false, default: false
       

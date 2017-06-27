@@ -20,7 +20,7 @@
     </thead>
   
     <tbody>
-      <% @users.each do |user| %>
+      <% @users.order("employee_id ASC").each do |user| %>
         <tr>
           <td><%= user.employee_id %></td>
           <td><%= link_to "#{user.username}", user %></td>

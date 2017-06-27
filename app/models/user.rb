@@ -1,13 +1,14 @@
 class User < ActiveRecord::Base
   authenticates_with_sorcery!
   
-  validates :password_yomi, uniqueness: true, presence: true
+  validates :password_yomi, presence: true
   validates :password, length: { minimum: 6, maximum: 8 }, if: -> { new_record? || changes[:crypted_password] }
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
   validates :employee_id, uniqueness: true, presence: true, format: { with: /\d{7}/ }
   validates :username, presence: true
   validates :username_yomi, presence: true
+  validates :belonging, presence: true
   
   has_many :lending_histories, :dependent => :destroy
   
@@ -27,7 +28,7 @@ class User < ActiveRecord::Base
   # CSV一括登録用
   # 更新を許可するカラムを定義
   def self.updatable_attributes
-    ["employee_id", "username", "email", "password", "password_confirmation", "admin"]
+    ["employee_id", "username", "email", "password", "password_confirmation", "admin", "password_yomi", "username_yomi", "belonging"]
   end
   
 end

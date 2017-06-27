@@ -1,8 +1,11 @@
 $(function(){
     $('label[for=user_password]').append("<span class=\"small text-danger\">*必須</span>");
     $('label[for=user_password_confirmation]').append("<span class=\"small text-danger\">*必須</span>");
+    $('label[for=user_password_yomi]').append("<span class=\"small text-danger\">*必須</span>");
+    $('label[for=user_belonging]').append("<span class=\"small text-danger\">*必須</span>");
     $('label[for=user_employee_id]').append("<span class=\"small text-danger\">*必須</span>");
     $('label[for=user_username]').append("<span class=\"small text-danger\">*必須</span>");
+    $('label[for=user_username_yomi]').append("<span class=\"small text-danger\">*必須</span>");
 
     var API_KEY = ENV["GOOGLE_CUSTOM_SEARCH_API_KEY"];
     var CUSTOM_SEARCH_ENGINE = ENV["GOOGLE_CUSTOM_SEARCH_ENGINE_ID"];

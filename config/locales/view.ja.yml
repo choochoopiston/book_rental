@@ -1,8 +1,11 @@
 ja:
   password: パスワード
   password_confirmation: パスワード(確認用)
+  password_yomi: パスワードよみ
   email: メールアドレス
-  username: ユーザ名
+  username: 氏名漢字
+  username_yomi: 氏名かな
+  belonging: 所属
   employee_id: 社員番号
   book_detail_id: 書籍情報タイトル
   code: 蔵書コード

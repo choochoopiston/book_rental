@@ -57,11 +57,14 @@ ActiveRecord::Schema.define(version: 20170421020349) do
   add_index "lending_histories", ["user_id"], name: "index_lending_histories_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                                           null: false
+    t.string   "email"
     t.string   "crypted_password"
     t.string   "salt"
     t.string   "employee_id",                                     null: false
+    t.string   "password_yomi",                                   null: false
     t.string   "username",                                        null: false
+    t.string   "username_yomi",                                   null: false
+    t.string   "belonging",                                       null: false
     t.boolean  "admin",                           default: false, null: false
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false

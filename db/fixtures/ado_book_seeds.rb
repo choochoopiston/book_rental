@@ -52,14 +52,15 @@ begin
         end
         User.find_or_initialize_by(employee_id: 2017000) do |user|
             user.username = "テスト管理者"
-            user.username = "てすとかんりしゃ"
+            user.username_yomi = "てすとかんりしゃ"
             user.email = "choochoopiston@gmail.com"
             user.password = "password"
             #初期データ投入したらすぐにパスワード変更すること。
             user.password_confirmation = "password"
-            user.password_confirmation = "パスワード"
+            user.password_yomi = "パスワード"
             user.employee_id = 2017000
             user.admin = true
+            user.belonging = "本社"
             user.save!
             puts "ユーザID-1を登録しました。"
         end

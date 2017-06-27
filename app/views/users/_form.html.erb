@@ -14,9 +14,9 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :email, class: "col-sm-3 control-label" %>
+    <%= f.label :employee_id, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
-      <%= f.email_field :email, class: "form-control" %>
+      <%= f.text_field :employee_id, class: "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -34,15 +34,34 @@
      </div>
   </div>
   <div class="form-group">
-    <%= f.label :employee_id, class: "col-sm-3 control-label" %>
-    <div class="col-sm-8">
-      <%= f.text_field :employee_id, class: "form-control" %>
-    </div>
+     <%= f.label :password_yomi, class: "col-sm-3 control-label" %>
+     <div class="col-sm-8">
+       <%= f.text_field :password_yomi, class: "form-control", placeholder: "ユーザ新規登録、またはパスワード変更時のみ入力してください
+       " %>
+     </div>
   </div>
   <div class="form-group">
     <%= f.label :username, class: "col-sm-3 control-label" %>
     <div class="col-sm-8">
       <%= f.text_field :username, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :username_yomi, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.text_field :username_yomi, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :belonging, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.text_field :belonging, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :email, class: "col-sm-3 control-label" %>
+    <div class="col-sm-8">
+      <%= f.email_field :email, class: "form-control" %>
     </div>
   </div>
   <div class="form-group">
